@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09070d;
+  --foreground: #f3eef3;
+  /* Brand palette (from provided artwork)
+     Primary: #B10E6B
+     Secondary: #F3E5E6
+     Tertiary: #00BC08
+     Neutral: #857278
+  */
+  --color-primary: #B10E6B;
+  --color-secondary: #F3E5E6;
+  --color-tertiary: #00BC08;
+  --color-neutral: #857278;
+  --accent-glow: rgba(177,14,107,0.18);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #09070d;
+    --foreground: #f3eef3;
+    --color-primary: #d46aa0;
+    --color-secondary: #2b1b23;
+    --color-tertiary: #00b248;
+    --color-neutral: #bfaeb3;
+    --accent-glow: rgba(212,106,160,0.12);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Splash / Loading styles */
+.splash-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(147, 74, 170, 0.22), transparent 18%),
+    radial-gradient(circle at 50% 50%, rgba(177, 14, 107, 0.16), transparent 30%),
+    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.04), transparent 38%),
+    linear-gradient(180deg, #12101a 0%, #09070d 100%);
+  z-index: 60;
+  backdrop-filter: blur(6px);
+}
+
+.splash-root::before,
+.splash-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.splash-root::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 33.333% 33.333%;
+  opacity: 0.28;
+}
+
+.splash-root::after {
+  background:
+    linear-gradient(135deg, transparent 0 49.5%, rgba(255,255,255,0.04) 49.5% 50.5%, transparent 50.5% 100%),
+    linear-gradient(225deg, transparent 0 49.5%, rgba(255,255,255,0.03) 49.5% 50.5%, transparent 50.5% 100%);
+  background-size: 31% 31%;
+  background-position: 0 0, 50% 50%;
+  opacity: 0.35;
+}
+
+.splash-card {
+  position: relative;
+  z-index: 1;
+  padding: 48px 56px;
+  border-radius: 28px;
+  text-align: center;
+  color: var(--foreground);
+  border: 1px solid rgba(255,255,255,0.07);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+    rgba(11, 8, 16, 0.66);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 120px rgba(177,14,107,0.16);
+  backdrop-filter: blur(18px);
+}
+
+.splash-logo {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto 24px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,0.11), transparent 34%),
+    linear-gradient(135deg, rgba(17, 95, 136, 0.9), rgba(13, 78, 113, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.12) inset,
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 80px rgba(177,14,107,0.22);
+  overflow: hidden;
+}
+
+.splash-logo img {
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
+}
+
+.splash-title {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+  text-shadow: 0 0 18px rgba(177,14,107,0.18);
+}
+
+.splash-sub {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(243,238,243,0.7);
+}
+
+.splash-spinner {
+  margin: 34px auto 0;
+  width: min(260px, 60vw);
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-spinner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  animation: slide 1.7s linear infinite;
+  box-shadow: 0 0 22px rgba(177,14,107,0.45);
+}
+
+@keyframes slide {
+  0% { transform: translateX(-40%); }
+  50% { transform: translateX(40%); }
+  100% { transform: translateX(-40%); }
+}
+
+.brand-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(177,14,107,0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%),
+    var(--background);
+  color: var(--foreground);
+}
+
+.brand-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+    rgba(12, 10, 18, 0.76);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
