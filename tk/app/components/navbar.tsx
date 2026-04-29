@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -36,54 +37,54 @@ const solutionsMenu = [
 
 function RaRuNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isFullWidth, setIsFullWidth] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isSignInRoute = pathname?.toLowerCase().startsWith("/signin");
   const isTkRoute = pathname?.toLowerCase().startsWith("/tk");
 
   useEffect(() => {
-    // Keep the navbar full-width on SignIn and TK landing routes.
-    if (isSignInRoute || isTkRoute) {
-      setIsFullWidth(true);
-      return;
-    }
-
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
+        setMobileMenuOpen(false);
       }
-    };
-    
-    const handleScroll = () => {
-      // Check if scrolled to bottom of page
-      const scrollHeight = document.documentElement.scrollHeight;
-      const currentScroll = window.innerHeight + window.scrollY;
-      const isNearBottom = currentScroll >= scrollHeight - 200;
-      setIsFullWidth(isNearBottom);
     };
 
     document.addEventListener("keydown", handleEscape);
-    window.addEventListener("scroll", handleScroll);
-    
+
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      window.removeEventListener("scroll", handleScroll);
     };
   }, [isSignInRoute, isTkRoute]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <>
       <nav
         onMouseLeave={() => setMenuOpen(false)}
         className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 bg-white/20 px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 ${
-          isFullWidth
+          isSignInRoute || isTkRoute
             ? "left-0 right-0 w-full max-w-none"
             : "left-0 right-0 w-full max-w-none"
         }`}
       >
-        <div className="flex items-center justify-between gap-5 px-0 md:px-[5vw]">
-          <Link href="/" className={`${playfair.className} text-[20px] font-bold tracking-[-0.05em] text-[#890051] md:text-[24px]`}>
-            TK Voice &amp; Visuals
+        <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw]">
+          <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
+            <Image
+              src="/site_img/logo.jpg"
+              alt="TK Voice &amp; Visuals"
+              width={44}
+              height={44}
+              priority
+              className="h-10 w-10 rounded-full object-cover ring-1 ring-white/60 md:h-11 md:w-11"
+            />
+            {/* <span className={`${playfair.className} max-w-[120px] text-[15px] font-bold leading-none tracking-[-0.05em] text-[#890051] sm:max-w-none sm:text-[16px] md:text-[24px]`}>
+                 TK <br></br>Voice &amp; Visuals
+            </span> */}
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -172,7 +173,7 @@ function RaRuNavbar() {
 
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 md:flex">
             <Link href="/SignIn" className="rounded-full border border-[#b10e6b]/15 bg-white/45 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#890051] transition-colors hover:bg-white/70 hover:text-[#b10e6b]">
               SignIn
             </Link>
@@ -180,6 +181,107 @@ function RaRuNavbar() {
             <Link href="/Consultancy" className="rounded-full bg-gradient-to-r from-[#890051] to-[#b10e6b] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white transition-transform hover:-translate-y-0.5 hover:opacity-95">
               Consultancy
             </Link>
+          </div>
+
+          <div className="flex items-center gap-2 md:hidden">
+            <Link
+              href="/SignIn"
+              onClick={() => setMobileMenuOpen(false)}
+              className="rounded-full border border-[#b10e6b]/15 bg-white/55 px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#890051] shadow-sm transition-colors hover:bg-white/75"
+            >
+              SignIn
+            </Link>
+            <Link
+              href="/Consultancy"
+              onClick={() => setMobileMenuOpen(false)}
+              className="rounded-full bg-gradient-to-r from-[#890051] to-[#b10e6b] px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-white shadow-sm transition-transform hover:-translate-y-0.5"
+            >
+              Consultancy
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border border-white/40 bg-white/45 text-[#890051] shadow-sm transition-colors hover:bg-white/70 md:hidden"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMobileMenuOpen((current) => !current)}
+          >
+            <span className="text-xl leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
+          </button>
+        </div>
+
+        <div
+          id="mobile-navigation"
+          className={`overflow-hidden md:hidden transition-all duration-300 ease-out ${
+            mobileMenuOpen ? "mt-4 max-h-[80vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+          }`}
+          aria-hidden={!mobileMenuOpen}
+        >
+          <div className="rounded-[24px] border border-white/45 bg-white/88 p-4 shadow-[0_18px_45px_rgba(5,7,18,0.14)] backdrop-blur-2xl">
+            <div className="grid gap-4">
+              <div className="rounded-[20px] border border-[#b10e6b]/10 bg-white/70 p-4">
+                <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Navigate</div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {[
+                    { label: "How it works", href: "/Workflow" },
+                    { label: "Resources", href: "/Resources" },
+                    { label: "Pricing", href: "/Pricing" },
+                    { label: "About", href: "/About" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-[16px] bg-white/80 px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#25181d] transition-colors hover:bg-[#f5dce3]/80"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[20px] border border-[#b10e6b]/10 bg-white/70 p-4">
+                <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Solutions</div>
+                <div className="grid gap-2">
+                  {[
+                    { href: "/Discover/RaRu", label: "RaRu" },
+                    { href: "/Discover/ADcraft", label: "ADcraft" },
+                    { href: "/Discover/Nexora", label: "Nexora" },
+                    { href: "/Discover/Voxium", label: "Voxium" },
+                    { href: "/Discover/eyeCatching", label: "eyeCatching" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between rounded-[16px] bg-white/80 px-4 py-3 text-sm font-semibold text-[#25181d] transition-colors hover:bg-[#f5dce3]/80"
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-[#b10e6b]">›</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Link
+                  href="/SignIn"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-[16px] border border-[#b10e6b]/15 bg-white/75 px-4 py-3 text-center text-sm font-semibold uppercase tracking-[0.16em] text-[#890051] transition-colors hover:bg-white"
+                >
+                  SignIn
+                </Link>
+                <Link
+                  href="/Consultancy"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-[16px] bg-gradient-to-r from-[#890051] to-[#b10e6b] px-4 py-3 text-center text-sm font-semibold uppercase tracking-[0.16em] text-white transition-transform hover:-translate-y-0.5"
+                >
+                  Consultancy
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

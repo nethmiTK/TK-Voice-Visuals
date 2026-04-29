@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
@@ -48,7 +47,7 @@ export default function Welcome() {
 						initial={{ opacity: 0, scale: 0.75, rotate: -8 }}
 						animate={{ opacity: 1, scale: 1, rotate: 0 }}
 						transition={{ duration: 1.1, ease: "easeOut" }}
-						className="relative h-[240px] w-[240px] rounded-full bg-white/62 p-4 shadow-[0_0_0_1px_rgba(177,14,107,0.12),0_30px_120px_rgba(177,14,107,0.22)] ring-1 ring-white/80 backdrop-blur-xl md:h-[320px] md:w-[320px]"
+						className="relative h-[100px] w-[100px] rounded-full bg-white/62 p-3 shadow-[0_0_0_1px_rgba(177,14,107,0.12),0_24px_96px_rgba(177,14,107,0.2)] ring-1 ring-white/80 backdrop-blur-xl md:h-[80px] md:w-[80px]"
 					>
 						<motion.div
 							animate={{ scale: [1, 1.04, 1], opacity: [0.88, 1, 0.88] }}
@@ -56,30 +55,32 @@ export default function Welcome() {
 							className="absolute inset-0 rounded-full border border-[#b10e6b]/22"
 						/>
 						<div className="absolute inset-3 rounded-full border border-[#b10e6b]/12" />
-						<Image
+							<img
 							src="/site_img/logo.jpg"
 							alt="TK Voice & Visuals logo"
-							width={320}
-							height={320}
-							priority
+								width={280}
+								height={280}
 							className="h-full w-full rounded-full object-cover"
 						/>
 					</motion.div>
 				) : stage === "reveal" ? (
 					<motion.div
-						initial={{ scale: 0.85, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						transition={{ duration: 0.8 }}
-						className="relative h-[260px] w-[260px] rounded-full bg-white/62 p-4 shadow-[0_0_0_1px_rgba(177,14,107,0.12),0_30px_120px_rgba(177,14,107,0.22)] ring-1 ring-white/80 backdrop-blur-xl md:h-[340px] md:w-[340px]"
+						initial={{ opacity: 0, scale: 0.75, rotate: -8 }}
+						animate={{ opacity: 1, scale: 1, rotate: 0 }}
+						transition={{ duration: 1.1, ease: "easeOut" }}
+						className="relative h-[100px] w-[100px] rounded-full bg-white/62 p-3 shadow-[0_0_0_1px_rgba(177,14,107,0.12),0_24px_96px_rgba(177,14,107,0.2)] ring-1 ring-white/80 backdrop-blur-xl md:h-[80px] md:w-[80px]"
 					>
-						<div className="absolute inset-0 rounded-full border border-[#b10e6b]/22" />
+						<motion.div
+							animate={{ scale: [1, 1.04, 1], opacity: [0.88, 1, 0.88] }}
+							transition={{ duration: 3.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+							className="absolute inset-0 rounded-full border border-[#b10e6b]/22"
+						/>
 						<div className="absolute inset-3 rounded-full border border-[#b10e6b]/12" />
-						<Image
+							<img
 							src="/site_img/logo.jpg"
 							alt="TK Voice & Visuals logo"
-							width={340}
-							height={340}
-							priority
+								width={280}
+								height={280}
 							className="h-full w-full rounded-full object-cover"
 						/>
 					</motion.div>
