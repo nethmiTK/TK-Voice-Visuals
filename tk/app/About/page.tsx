@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Inter, Playfair_Display } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
-const playfair = Playfair_Display({ subsets: ['latin'], weights: [400, 700], styles: ['normal', 'italic'] });
+const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'] });
 
 export default function AboutPage() {
   const services = [

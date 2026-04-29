@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "../../components/navbar";
-
 const inter = Inter({
 	subsets: ["latin"],
 	display: "swap",

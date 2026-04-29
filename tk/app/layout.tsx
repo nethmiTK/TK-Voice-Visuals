@@ -17,7 +17,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "TK Voice & Visuals",
   description: "TK Voice & Visuals landing page",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/site_img/logo.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/site_img/logo.jpg",
+  },
+  openGraph: {
+    title: "TK Voice & Visuals",
+    description: "TK Voice & Visuals landing page",
+    images: ["/site_img/logo.jpg"],
+  },
 };
+
 
 export default function RootLayout({
   children,
