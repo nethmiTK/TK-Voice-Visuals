@@ -14,7 +14,7 @@ export default function ConsultancyPage() {
           <aside className="lg:col-span-4 space-y-12">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-[#a90b66] mb-6">Strategic Partnership</p>
-              <h1 className="font-serif text-[64px] leading-[0.95] font-light tracking-tight">Initiate<br/>Your <em>Consultation</em></h1>
+              <h1 className="font-serif text-[64px] leading-[0.95] font-light tracking-tight">Initiate<br />Your <em>Consultation</em></h1>
               <p className="mt-6 max-w-md text-[#574048] leading-7">Begin a partnership rooted in creative precision and strategic allure. Our senior consultants review every inquiry personally to ensure complete brand alignment.</p>
             </div>
 
@@ -25,7 +25,7 @@ export default function ConsultancyPage() {
                   <div className="h-10 w-10 rounded-full bg-[#ffd9e4] flex items-center justify-center">☎</div>
                   <div>
                     <div className="text-[9px] uppercase tracking-wider text-[#8b7079]">Priority Line</div>
-                    <div className="text-lg font-bold text-[#a90b66]">+1 (800) TK-ELITE</div>
+                    <div className="text-lg font-bold text-[#a90b66]">075 263 2946<br></br>077 785 8521</div>
                   </div>
                 </div>
 
@@ -33,7 +33,7 @@ export default function ConsultancyPage() {
                   <div className="h-10 w-10 rounded-full bg-[#ffd9e4] flex items-center justify-center">✉</div>
                   <div>
                     <div className="text-[9px] uppercase tracking-wider text-[#8b7079]">Digital Office</div>
-                    <div className="text-lg font-bold text-[#a90b66]">concierge@tkvoicevisuals.com</div>
+                    <div className="text-lg font-bold text-[#a90b66]">https://tkvoicevisuals.me</div>
                   </div>
                 </div>
               </div>
@@ -41,14 +41,7 @@ export default function ConsultancyPage() {
               <div className="mt-4 text-[10px] uppercase tracking-widest text-[#8b7079] font-bold">Rafael Rajapaksa, CEO</div>
             </div>
 
-            <div className="rounded-2xl overflow-hidden bg-[#fff] shadow-[0_40px_80px_rgba(169,11,102,0.04)]">
-              <div className="aspect-[4/3] bg-gradient-to-br from-[#f3e5e6] to-[#fff8f8] flex items-end p-6">
-                <div>
-                  <div className="text-[10px] uppercase tracking-wider text-[#8b7079]">Colombo HQ</div>
-                  <div className="text-xl font-display">Innovation Hub</div>
-                </div>
-              </div>
-            </div>
+
           </aside>
 
           {/* Right column: form */}
@@ -99,10 +92,10 @@ export default function ConsultancyPage() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 24<br/><span className="block font-bold">09:00 AM</span></button>
-                  <button type="button" className="rounded-xl bg-[#a90b66] p-4 text-white shadow-lg">Oct 25<br/><span className="block font-bold">11:30 AM</span></button>
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 26<br/><span className="block font-bold">02:00 PM</span></button>
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 28<br/><span className="block font-bold">10:00 AM</span></button>
+                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 24<br /><span className="block font-bold">09:00 AM</span></button>
+                  <button type="button" className="rounded-xl bg-[#a90b66] p-4 text-white shadow-lg">Oct 25<br /><span className="block font-bold">11:30 AM</span></button>
+                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 26<br /><span className="block font-bold">02:00 PM</span></button>
+                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 28<br /><span className="block font-bold">10:00 AM</span></button>
                 </div>
 
                 <div className="border-2 border-dashed border-[#e7cfd6] rounded-2xl p-8 text-center">

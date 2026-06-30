@@ -105,10 +105,10 @@ function RaRuNavbar() {
                       <div className="space-y-2">
                         {[
                           { href: "/Discover/RaRu", label: "Business Solutions", desc: "Digital solutions hub" },
-                          { href: "/Discover/ADcraft", label: "ADcraft", desc: "Campaign creative" },
-                          { href: "/Discover/Nexora", label: "Nexora", desc: "Automation systems" },
-                          { href: "/Discover/Voxium", label: "Voxium", desc: "Voice-led experiences" },
-                          { href: "/Discover/eyeCatching", label: "eyeCatching", desc: "Editorial visuals" },
+                          // { href: "/Discover/ADcraft", label: "ADcraft", desc: "Campaign creative" },
+                          // { href: "/Discover/Nexora", label: "Nexora", desc: "Automation systems" },
+                          { href: "/Discover/Voxium", label: "Voice Over", desc: "Voice-led experiences" },
+                          { href: "/Discover/eyeCatching", label: "Video editing", desc: "Editorial visuals" },
                         ].map((item) => (
                           <Link
                             key={item.href}
@@ -244,7 +244,7 @@ function RaRuNavbar() {
                 <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Solutions</div>
                 <div className="grid gap-2">
                   {[
-                    { href: "/Discover/RaRu", label: "RaRu" },
+                    { href: "/Discover/RaRu", label: "SOFTWARE DEVELOPMENT" },
                     { href: "/Discover/ADcraft", label: "ADcraft" },
                     { href: "/Discover/Nexora", label: "Nexora" },
                     { href: "/Discover/Voxium", label: "Voxium" },

@@ -38,23 +38,29 @@ const serviceCards = [
 
 const packageCards = [
 	{
-		name: "Elite",
-		price: "$4,900",
-		description: "Foundational excellence for scaling startups.",
-		features: ["Bespoke Brand UI", "5-Core Pages", "SEO Foundation"],
+		name: "Starter",
+		badge: "Basic Business System",
+		price: "LKR 40,000",
+		description: "Perfect for small businesses looking to digitize their daily operations.",
+		features: ["Custom Business System", "User Login & Management", "Dashboard & Reports", "Database Integration", "Responsive Design", "Basic Admin Panel"],
+		cta: "Get Started",
 	},
 	{
-		name: "Visionary",
-		price: "$12,500",
-		description: "Complete market dominance for established brands.",
-		features: ["Everything in Elite", "E-Commerce Integration", "Smart Automation Layer", "Premium Motion Graphics"],
+		name: "Growth",
+		badge: "Advanced Business System",
+		price: "LKR 75,000",
+		description: "Designed for growing businesses requiring advanced workflows and automation.",
+		features: ["Advanced Custom Features", "Multi-User Access", "Analytics & Reporting", "API Integrations", "Enhanced Security", "Dedicated Support"],
 		featured: true,
+		cta: "Scale Now",
 	},
 	{
 		name: "Enterprise",
-		price: "Custom",
-		description: "Infinite scale for global conglomerates.",
-		features: ["Dedicated Dev Team", "Full API Infrastructure", "Global CDN Distribution"],
+		badge: "Vendor Management Platform",
+		price: "LKR 150,000+",
+		description: "Complete multi-vendor ecosystem with powerful administration tools.",
+		features: ["Vendor Panel & Admin Panel", "Role-Based Permissions", "Order & Product Management", "Analytics Dashboard", "Custom Integrations", "Priority Support"],
+		cta: "Contact Us",
 	},
 ];
 
@@ -130,10 +136,10 @@ export default function RaRuPage() {
 
 			<section className="overflow-hidden bg-[#fff0f3] py-24">
 				<div className="px-[5vw] text-center">
-					<p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8b7079]">Partnered with Industry Titans</p>
+					<p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8b7079]">Powered by Elite Technologies</p>
 				</div>
 				<div className="mt-12 flex items-center justify-between gap-16 overflow-x-auto px-[5vw] opacity-40 grayscale transition-all duration-700 hover:grayscale-0">
-					{["LUMINA", "vogue.tech", "AXION", "SILICA", "NEO-GEN", "AVANT"].map((item) => (
+					{["Node.js", "React", "Next.js", "Angular", "Spring Boot", "MySQL", "MongoDB"].map((item) => (
 						<span key={item} className="shrink-0 text-3xl font-bold tracking-tighter first:font-black last:font-black">
 							{item}
 						</span>
@@ -245,6 +251,39 @@ export default function RaRuPage() {
 				</div>
 			</section>
 
+			<section className="bg-[#fff8f8] px-[5vw] py-32 border-t border-[#fbe2e9]">
+				<div className="mx-auto max-w-7xl">
+					<div className="text-center mb-16">
+						<span className="mb-4 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#b10e6b]">Showcase</span>
+						<h2 className={`${playfair.className} text-[clamp(2.5rem,4.6vw,4.4rem)] italic text-[#25181d]`}>Featured Project</h2>
+					</div>
+					<div className="grid grid-cols-1 gap-12 lg:grid-cols-2 items-center">
+						<div className="rounded-[24px] overflow-hidden bg-[#25181d] shadow-2xl relative group">
+							<video className="w-full h-auto aspect-video object-cover opacity-90 group-hover:opacity-100 transition-opacity" autoPlay loop muted playsInline>
+								<source src="/site_img/project_video.mp4" type="video/mp4" />
+								{/* fallback */}
+								<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv_5ovRFoontlbxnT-9FdYvtPgypAjdkQB8mkut1r7U7cmU7rRr-CBbDKZpPc48TbgrI0--I-ok0fvbd7CndGxxbS-ba0cSPvS9w-2cEsO6STwsQ_0hal0O4weunMXvluZfgIGMxQJ-hqiip9Xi3ufKkKVsq3QPUAiooAS4dgCxZ5dgJkEalUQsdJBePV5mb1Xs1KmWFJcBP90urqzY65aifmIfo5uo64IkO78-03UonUzV9mMlac7pz3vWmRDpq3Q5jtpHiG2CmZ4" alt="Project Showcase" className="w-full h-full object-cover" />
+							</video>
+							<div className="absolute inset-0 border-2 border-transparent group-hover:border-[#b10e6b]/30 rounded-[24px] transition-colors pointer-events-none"></div>
+						</div>
+						<div className="px-4">
+							<h3 className="text-[2rem] md:text-[2.5rem] font-bold text-[#25181d] mb-4 leading-tight">Advanced Vendor Management System</h3>
+							<p className="text-[#574048] mb-8 leading-[1.8] text-lg">
+								A fully customized, highly scalable web application built to streamline complex operations, manage multiple vendors, and automate daily workflows. Features include real-time analytics dashboards, role-based access control, and seamless database integrations.
+							</p>
+							<div className="mb-6">
+								<h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8b7079] mb-4">Core Tech Stack</h4>
+								<div className="flex flex-wrap gap-3">
+									{["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma"].map((tech) => (
+										<span key={tech} className="px-5 py-2 rounded-full bg-white border border-[#fbe2e9] text-[#b10e6b] text-sm font-semibold shadow-sm hover:shadow-md transition-shadow cursor-default">{tech}</span>
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<section className="bg-[#fff0f3] px-[5vw] py-32">
 				<div className="mb-24 text-center">
 					<h2 className={`${playfair.className} mb-6 text-[clamp(2.5rem,4.4vw,4.3rem)] italic text-[#25181d]`}>Investment Packages</h2>
@@ -252,24 +291,26 @@ export default function RaRuPage() {
 				</div>
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-3">
 					{packageCards.map((item) => (
-						<div key={item.name} className={`${item.featured ? "scale-[1.02] bg-gradient-to-b from-[#b10e6b] to-[#a90b66] text-white shadow-2xl shadow-[#b10e6b]/30" : "bg-white"} flex flex-col justify-between rounded-[24px] p-12`}>
+						<div key={item.name} className={`${item.featured ? "scale-[1.02] bg-gradient-to-b from-[#b10e6b] to-[#a90b66] text-white shadow-2xl shadow-[#b10e6b]/30" : "bg-white"} flex flex-col justify-between rounded-[24px] p-12 relative overflow-hidden`}>
+							{item.featured && <div className="absolute top-0 right-0 bg-[#ffd9e4] text-[#b10e6b] text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-bl-xl">Popular</div>}
 							<div>
-								<h3 className="mb-2 text-2xl font-bold">{item.name}</h3>
-								<p className={`mb-8 text-sm ${item.featured ? "text-white/70" : "text-[#574048]"}`}>{item.description}</p>
+								<div className={`mb-2 text-[11px] font-bold uppercase tracking-[0.2em] ${item.featured ? "text-white/70" : "text-[#b10e6b]"}`}>{item.badge}</div>
+								<h3 className="mb-2 text-3xl font-bold">{item.name}</h3>
+								<p className={`mb-8 text-sm leading-relaxed ${item.featured ? "text-white/80" : "text-[#574048]"}`}>{item.description}</p>
 								<div className="mb-8">
+									<span className="text-[12px] uppercase tracking-wider font-semibold opacity-70 block mb-1">Starting From</span>
 									<span className="text-4xl font-black">{item.price}</span>
-									{item.price !== "Custom" && <span className={item.featured ? "text-white/60" : "text-[#8b7079]"}>/mo</span>}
 								</div>
 								<ul className="mb-12 space-y-4">
 									{item.features.map((feature) => (
-										<li key={feature} className={`flex items-center gap-3 text-sm ${item.featured ? "text-white" : "text-[#25181d]"}`}>
-											<MaterialIcon name="check_circle" filled /> {feature}
+										<li key={feature} className={`flex items-start gap-3 text-sm font-medium ${item.featured ? "text-white" : "text-[#25181d]"}`}>
+											<MaterialIcon name="check_circle" filled /> <span>{feature}</span>
 										</li>
 									))}
 								</ul>
 							</div>
-							<button className={`w-full rounded-xl py-4 font-bold transition-all ${item.featured ? "bg-white text-[#b10e6b] hover:scale-95" : "border-2 border-[#b10e6b] text-[#b10e6b] hover:bg-[#b10e6b] hover:text-white"}`}>
-								{item.featured ? "Start My Era" : item.name === "Enterprise" ? "Enquire Now" : "Select Plan"}
+							<button className={`w-full rounded-xl py-4 font-bold transition-all ${item.featured ? "bg-white text-[#b10e6b] hover:scale-95 shadow-lg" : "border-2 border-[#b10e6b] text-[#b10e6b] hover:bg-[#b10e6b] hover:text-white"}`}>
+								{item.cta}
 							</button>
 						</div>
 					))}

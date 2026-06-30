@@ -137,98 +137,153 @@ export default function PricingPage() {
         ))}
       </section>
 
-      <section className="mx-auto max-w-6xl px-[5vw] pb-28">
-        <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15),0_18px_36px_-18px_rgba(0,0,0,0.2)]">
-          <div className="flex min-h-[800px] flex-col md:flex-row">
-            <div className="relative flex-1 overflow-hidden bg-white p-10 md:p-20">
-              <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-black/5 to-transparent" />
-              <div className="relative z-10">
-                <h2 className="mb-12 font-serif text-4xl leading-tight text-[#890051] md:text-5xl">
-                  I. Voice  <br /> Over
-                </h2>
+      <section className="mx-auto max-w-7xl px-[5vw] pb-28">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {/* Voice Over */}
+          <div className="rounded-[28px] border border-white/60 bg-white p-8 shadow-[0_20px_45px_rgba(177,14,107,0.05)] md:p-10 relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] text-8xl">🎙️</div>
+            <h2 className="mb-10 font-serif text-3xl leading-tight text-[#890051]">
+              Voice Over
+            </h2>
+            <ul className="space-y-6 relative z-10 flex-grow">
+              {[
+                ["Basic Voice (up to 30s)", "1,500"],
+                ["Basic Voice (up to 1m)", "2,500"],
+                ["Narration (1-3m)", "4,000"],
+                ["Documentary (per min)", "1,500"],
+                ["Commercial (up to 1m)", "5,000"],
+                ["Story Dubbing (up to 5m)", "7,500"],
+                ["Character Voice", "from 3,000"],
+              ].map(([label, price]) => (
+                <li key={label} className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm font-medium text-[#25181d]">{label}</span>
+                  <span className="flex-1 border-b border-dotted border-[#debec8] mx-2" />
+                  <span className="font-bold text-[#890051] whitespace-nowrap"><span className="text-[10px] uppercase mr-1 opacity-70">LKR</span>{price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-                <div className="mb-16">
-                  <h3 className="mb-8 border-b border-[#f5dce3] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    creative voice over
-                  </h3>
-                  <ul className="space-y-6">
-                    {[
-                      ["Commercial/Advertisement\n Up to 30 Seconds", "LKR 300"],
-                      ["Basic Voice Over Up to 1 Minute", "LKR 400"],
-                      ["Narration 1-3 Minutes", "LKR 500"],
-                      ["Story Dubbing Up to 5 Minutes", "LKR 800"],
-                      ["Voice Over for Video/YouTube per ", "LKR 500 per minute"],
-                      ["Voice Over for Animation/Cartoons", "LKR 700 per minute"],
-                      ["IVR/Phone System Voice Over", "LKR 1000 per minute"],
-                      ["Radio/Podcast Ad Voice Over", "LKR 300 per minute"],
-                      ["Voice Over for Reels/Shorts", "LKR 250 per 30 seconds"]
-                    ].map(([label, price]) => (
-                      <li key={label} className="flex items-baseline justify-between gap-4">
-                        <span className="text-lg font-medium text-[#25181d]">{label}</span>
-                        <span className="flex-1 border-b border-dotted border-[#debec8] mx-4" />
-                        <span className="font-bold text-[#890051]">{price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-              </div>
-            </div>
-
-            <div className="hidden w-8 shrink-0 bg-[linear-gradient(to_right,transparent_48%,rgba(0,0,0,0.05)_50%,transparent_52%)] md:block" />
-
-            <div className="relative flex-1 overflow-hidden bg-[#f3e5e6] p-10 md:p-20">
-              <div className="absolute right-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-black/5 to-transparent" />
-              <div className="relative z-10">
-                <h2 className="mb-12 font-serif text-4xl leading-tight text-[#890051] md:text-5xl">
-                  II. Video  <br /> Editing
-                </h2>
-
-                <div className="mb-16">
-                  <h3 className="mb-8 border-b border-[#debec8] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    Strategic Marketing
-                  </h3>
-                  <ul className="space-y-6">
-                    {[
-                      ["Basic Reel Up to 30 Seconds", "LKR 800"],
-                      ["Standard Reel Up to 60 Seconds", "LKR 1000"],
-                      ["Premium video Up to 90 Seconds", "LKR 3500"],
-                    ].map(([label, price]) => (
-                      <li key={label} className="flex items-baseline justify-between gap-4">
-                        <span className="text-lg font-medium text-[#25181d]">{label}</span>
-                        <span className="flex-1 border-b border-dotted border-[#debec8] mx-4" />
-                        <span className="font-bold text-[#890051]">{price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-8 border-b border-[#debec8] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    Monthly Content Packages
-                  </h3>
-                  <ul className="space-y-6">
-                    {[
-                      ["8 Reels (up to 30s), Basic Editing", "5000/month"],
-                      ["15 Reels (up to 1 min), Premium Editing,content planning,", "10000/month"],
-                    ].map(([label, price]) => (
-                      <li key={label} className="flex items-baseline justify-between gap-4">
-                        <span className="text-lg font-medium text-[#25181d]">{label}</span>
-                        <span className="flex-1 border-b border-dotted border-[#debec8] mx-4" />
-                        <span className="font-bold text-[#890051]">{price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          {/* Reel Editing */}
+          <div className="rounded-[28px] border border-white/60 bg-white p-8 shadow-[0_20px_45px_rgba(177,14,107,0.05)] md:p-10 relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] text-8xl">🎬</div>
+            <h2 className="mb-10 font-serif text-3xl leading-tight text-[#890051]">
+              Reel Editing
+            </h2>
+            <ul className="space-y-6 relative z-10 flex-grow">
+              {[
+                ["Basic Reel (up to 30s)", "2,500"],
+                ["Standard Reel (up to 1m)", "3,500"],
+                ["Premium Reel (up to 90s)", "5,000"],
+                ["Cinematic Reel (up to 2m)", "7,500"],
+              ].map(([label, price]) => (
+                <li key={label} className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm font-medium text-[#25181d]">{label}</span>
+                  <span className="flex-1 border-b border-dotted border-[#debec8] mx-2" />
+                  <span className="font-bold text-[#890051] whitespace-nowrap"><span className="text-[10px] uppercase mr-1 opacity-70">LKR</span>{price}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-10 pt-8 border-t border-[#f5dce3] relative z-10">
+               <h3 className="mb-6 font-bold text-[11px] uppercase tracking-[0.2em] text-[#574048]">Add-Ons</h3>
+               <ul className="space-y-4">
+                  {[
+                    ["Sinhala/Eng Subtitles", "1,000"],
+                    ["Custom Thumbnail", "1,500"],
+                    ["Motion Graphics", "2,500+"],
+                  ].map(([label, price]) => (
+                    <li key={label} className="flex items-baseline justify-between gap-2">
+                      <span className="text-xs text-[#574048]">{label}</span>
+                      <span className="text-xs font-bold text-[#890051] whitespace-nowrap"><span className="text-[9px] uppercase mr-1 opacity-70">LKR</span>{price}</span>
+                    </li>
+                  ))}
+               </ul>
             </div>
           </div>
 
-          <div className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-8 -translate-x-1/2 bg-[linear-gradient(to_right,transparent_48%,rgba(0,0,0,0.06)_50%,transparent_52%)] md:block" />
+          {/* Video Editing */}
+          <div className="rounded-[28px] border border-white/60 bg-white p-8 shadow-[0_20px_45px_rgba(177,14,107,0.05)] md:p-10 relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] text-8xl">🎥</div>
+            <h2 className="mb-10 font-serif text-3xl leading-tight text-[#890051]">
+              Video Editing
+            </h2>
+            <ul className="space-y-6 relative z-10 flex-grow">
+              {[
+                ["Basic Edit (up to 5m)", "6,000"],
+                ["Standard Edit (up to 10m)", "10,000"],
+                ["Premium Edit (up to 20m)", "18,000"],
+                ["YouTube Video (up to 30m)", "25,000"],
+              ].map(([label, price]) => (
+                <li key={label} className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm font-medium text-[#25181d]">{label}</span>
+                  <span className="flex-1 border-b border-dotted border-[#debec8] mx-2" />
+                  <span className="font-bold text-[#890051] whitespace-nowrap"><span className="text-[10px] uppercase mr-1 opacity-70">LKR</span>{price}</span>
+                </li>
+              ))}
+            </ul>
+             <div className="mt-10 pt-8 border-t border-[#f5dce3] relative z-10">
+               <h3 className="mb-6 font-bold text-[11px] uppercase tracking-[0.2em] text-[#574048]">Fast Delivery & Extras</h3>
+               <ul className="space-y-4">
+                  {[
+                    ["24-Hour Express", "+50%"],
+                    ["Extra Revisions", "1,000/rev"],
+                  ].map(([label, price]) => (
+                    <li key={label} className="flex items-baseline justify-between gap-2">
+                      <span className="text-xs text-[#574048]">{label}</span>
+                      <span className="text-xs font-bold text-[#890051] whitespace-nowrap">{price}</span>
+                    </li>
+                  ))}
+               </ul>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div className="mt-12 text-center text-sm italic text-[#574048] opacity-60">
-          All services are printed on our core principles of excellence and impact.
+      <section className="bg-white py-28 border-y border-[#f5dce3]">
+        <div className="mx-auto max-w-7xl px-[5vw]">
+          <div className="text-center mb-16">
+            <span className="mb-4 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#b10e6b]">Social Media</span>
+            <h2 className="mb-6 font-serif text-[clamp(2.5rem,5vw,3.5rem)] leading-tight text-[#25181d]">Monthly Content Packages</h2>
+            <p className="text-[#574048] text-lg max-w-2xl mx-auto leading-[1.8]">Consistent, high-quality content designed for serious creators and growing brands looking to dominate their niche.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Starter",
+                price: "20,000",
+                desc: "8 Reels (up to 30s), Basic Editing, Captions",
+              },
+              {
+                name: "Growth",
+                price: "40,000",
+                desc: "16 Reels (up to 1 min), Advanced Editing, Custom Thumbnails",
+                featured: true
+              },
+              {
+                name: "Premium",
+                price: "70,000",
+                desc: "30 Reels (up to 1 min), Full Content Management, Priority Delivery",
+              }
+            ].map((pkg) => (
+              <div key={pkg.name} className={`rounded-[24px] p-10 ${pkg.featured ? "bg-gradient-to-b from-[#b10e6b] to-[#a90b66] text-white shadow-2xl shadow-[#b10e6b]/30 scale-[1.02]" : "bg-[#fff8f8] text-[#25181d] border border-[#f5dce3]"}`}>
+                <h3 className="text-2xl font-bold mb-3">{pkg.name}</h3>
+                <p className={`text-sm leading-relaxed mb-6 ${pkg.featured ? "text-white/80" : "text-[#574048]"}`}>{pkg.desc}</p>
+                <div className="text-4xl font-black mb-8"><span className="text-sm uppercase font-semibold mr-1 opacity-80">LKR</span>{pkg.price} <span className="text-sm font-normal opacity-70">/month</span></div>
+                
+                <div className={`pt-8 border-t ${pkg.featured ? "border-white/20" : "border-[#f5dce3]"}`}>
+                  <h4 className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ${pkg.featured ? "text-white/70" : "text-[#890051]"}`}>Included in all tiers</h4>
+                  <ul className="space-y-4">
+                    {["Basic Color Correction", "Royalty-Free Music", "1 Free Revision/Video", "Social Media Ready Export"].map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-sm">
+                        <span className={pkg.featured ? "text-white" : "text-[#b10e6b]"}>✓</span> <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

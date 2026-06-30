@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
+	subsets: ["latin"],
+	display: "swap",
 });
 
 const creativeResources = [
@@ -343,7 +343,7 @@ export default function ResourceHub() {
 					</div>
 				</div>
 			</section>
-
+			{/* 
 			<section className="bg-[#f5dce3] px-[5vw] py-32">
 				<div className="mb-16">
 					<h2 className="mb-2 text-[clamp(1.8rem,4vw,2.75rem)] font-black tracking-[-0.04em] text-[#25181d]">
@@ -369,7 +369,7 @@ export default function ResourceHub() {
 						</article>
 					))}
 				</div>
-			</section>
+			</section> */}
 
 			<section className="bg-[#fff8f8] px-[5vw] py-24">
 				<div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-12 md:flex-row md:items-start">

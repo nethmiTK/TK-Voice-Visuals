@@ -9,13 +9,13 @@ const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], 
 export default function AboutPage() {
   const services = [
     {
-      title: 'Voxium',
+      title: 'Voice Over',
       description: 'Precision audio engineering for the influential voice.',
       category: 'Audio',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-rjRPksgvJJQPkEMNgQjm5_HIPhzZKQRbqSzkk-_pU7eq1UuH_55YhYPE0xOLwHK6TokSTgMozc_XC8HX4x8We-FPDNL4RQslD5BQ4DVc77bhTDwkDPz8x4Lxm-iuRDP1S3iY-j0PapIKq6nSjlRlPJVlUwwKo7iobGstJt8CT3-KKzoBGwEObwehW5bZtjrdpxeEBBDTymzEaq2BkveNPR3EfB2kaMWYWHsintl565cbG-yy-aPK6JJ8S1V2WcVEleboIljGgTFR',
     },
     {
-      title: 'eyeCatching',
+      title: 'Vedio Editing',
       description: 'Visual narratives that command immediate attention.',
       category: 'Visual',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB3_T7JF4IO31FbTCepYATh6_RT80wp7JxgiHuP9ZuJb3QXWkpiAXNXa4uhYCgmE-bMmCaFwfGx-OHaIEzUhwnWiCF2yTabPFvXk0_A4-3-rSbpOvF9DL-2aU3J2eAyNPBKxkoEPqVqjgNxnbAo5Yq4CGtwwE6n8FFsUBu5FFDyXiiXMTVQk95Ma8eYFIG3k81WW12V9Dp7QWmoykE5kBsf7EP9M2J4Wix4DlGpMhEGSd-0yDTJxiNKRbRMlnoyXD9NVvivTLHj4v_2',
@@ -25,19 +25,7 @@ export default function AboutPage() {
       description: 'Rare insights. Unmatched execution. Strategic research for market dominance.',
       category: 'Strategy',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZrdat-QCVZP4SWem9Zb_LwyU_ve1qquzQBxKG4UZ9_iJXetysRm4CDDhmC8JCLQJM6CJMfBPb9R2DeLfmwp20HQ1OYAWjxcJgmxZd8nD3s08bf4Z2niYyzod_l-M2E9VFoJelr6avYvc4yyxOK_RnpXKZ6xn_lX73s33rIIHDilEh5tGqBsZoaPCRAekKrfsdP0-LXY7SZF8x3HQP9MaeB1NBLbTTSdlKfWMx4ImYMYfJU55162iKkK-yb8s5gQvyzYzKdVeD3ftq',
-    },
-    {
-      title: 'ADcraft',
-      description: 'Editorial-first advertising that prioritizes brand story over volume.',
-      category: 'Advertising',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZrdat-QCVZP4SWem9Zb_LwyU_ve1qquzQBxKG4UZ9_iJXetysRm4CDDhmC8JCLQJM6CJMfBPb9R2DeLfmwp20HQ1OYAWjxcJgmxZd8nD3s08bf4Z2niYyzod_l-M2E9VFoJelr6avYvc4yyxOK_RnpXKZ6xn_lX73s33rIIHDilEh5tGqBsZoaPCRAekKrfsdP0-LXY7SZF8x3HQP9MaeB1NBLbTTSdlKfWMx4ImYMYfJU55162iKkK-yb8s5gQvyzYzKdVeD3ftq',
-    },
-    {
-      title: 'Nexora',
-      description: 'Next-gen digital infrastructure for the elite.',
-      category: 'Technology',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZrdat-QCVZP4SWem9Zb_LwyU_ve1qquzQBxKG4UZ9_iJXetysRm4CDDhmC8JCLQJM6CJMfBPb9R2DeLfmwp20HQ1OYAWjxcJgmxZd8nD3s08bf4Z2niYyzod_l-M2E9VFoJelr6avYvc4yyxOK_RnpXKZ6xn_lX73s33rIIHDilEh5tGqBsZoaPCRAekKrfsdP0-LXY7SZF8x3HQP9MaeB1NBLbTTSdlKfWMx4ImYMYfJU55162iKkK-yb8s5gQvyzYzKdVeD3ftq',
-    },
+    }
   ];
 
   const pillars = [
@@ -91,14 +79,14 @@ export default function AboutPage() {
       <section className="py-16 md:py-32 px-4 sm:px-6 md:px-[5vw]">
         <div className="max-w-7xl mx-auto w-full">
           <div className="mb-12 md:mb-20">
-            <h2 className={`${playfair.className} text-[clamp(2rem,6vw,3rem)] font-light mb-4`}>The Signature 5</h2>
+            <h2 className={`${playfair.className} text-[clamp(2rem,6vw,3rem)] font-light mb-4`}>Our Core Pillars</h2>
             <p className="text-[#574048] text-sm md:text-base max-w-xl">
               Our core pillars of brand excellence, each a specialized ecosystem for modern authority.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[300px] md:auto-rows-[350px]">
-            {/* Voxium - Large */}
+            {/* Voice Over - Large */}
             <div className="md:col-span-8 group relative overflow-hidden rounded-2xl bg-[#f5dce3]">
               <img
                 src={services[0].image}
@@ -113,7 +101,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* eyeCatching */}
+            {/* Video Editing */}
             <div className="md:col-span-4 group relative overflow-hidden rounded-2xl bg-[#b10e6b]">
               <img
                 src={services[1].image}
@@ -129,20 +117,7 @@ export default function AboutPage() {
             </div>
 
             {/* RaRu */}
-            <div className="md:col-span-4 group relative overflow-hidden rounded-2xl bg-[#ffe8ee]">
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
-                <div />
-                <div>
-                  <h3 className={`${playfair.className} text-xl md:text-2xl text-[#b10e6b] mb-3 font-light`}>
-                    {services[3].title}
-                  </h3>
-                  <p className="text-[#574048] text-xs md:text-sm leading-relaxed">{services[3].description}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Nexora */}
-            <div className="md:col-span-4 group relative overflow-hidden rounded-2xl bg-[#3b2c31]">
+            <div className="md:col-span-12 group relative overflow-hidden rounded-2xl bg-[#3b2c31]">
               <img
                 src={services[2].image}
                 alt={services[2].title}
@@ -153,19 +128,6 @@ export default function AboutPage() {
                   {services[2].title}
                 </h3>
                 <p className="text-white/70 text-xs md:text-sm">{services[2].description}</p>
-              </div>
-            </div>
-
-            {/* ADcraft */}
-            <div className="md:col-span-4 group relative overflow-hidden rounded-2xl bg-[#f5dce3]">
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center" />
-                <div>
-                  <h3 className={`${playfair.className} text-xl md:text-2xl text-[#25181d] mb-3 font-light`}>
-                    {services[4].title}
-                  </h3>
-                  <p className="text-[#574048] text-xs md:text-sm leading-relaxed">{services[4].description}</p>
-                </div>
               </div>
             </div>
           </div>
