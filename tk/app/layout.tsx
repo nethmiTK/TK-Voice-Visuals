@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "TK Voice & Visuals | Voice Over & Digital Marketing",
   description: "TK Voice & Visuals offers professional voice over, digital marketing, and creative visual services to elevate your brand.",
-  keywords: ["TK Voice & Visuals", "voice over", "digital marketing", "creative visuals", "voice acting", "marketing agency", "audio production", "video production", "branding"],
+  keywords: ["tk", "tkvoice", "tk voice", "TK Voice & Visuals", "voice over", "digital marketing", "creative visuals", "voice acting", "marketing agency", "audio production", "video production", "branding"],
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

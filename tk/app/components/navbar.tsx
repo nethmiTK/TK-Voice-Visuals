@@ -21,8 +21,8 @@ type NavbarProps = {
 const solutionsMenu = [
   {
     href: "/Discover/RaRu",
-    title: "RaRu",
-    description: "Digital solutions hub with the full editorial system.",
+    title: "Software Development",
+    description: "Website,Mobile App,Web system and etc",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAuetVLbXiMia54Jmgy3kcFsspIIUC1-nnD5wykDiaMJ14iBftcr55eTnS_rtJPJWaECXx8f1h8mt18yPNx1wuWFSCPD1UND4Mt-gx8Ft9LB-C89de8vd7xr1OKBffy5DoH1GTYFu8hZPOKK3rF8kKmUVSu_0Pgg5C53Mk7buQ983uHlNsot-F2LeZxJCYcWnL5GFtHr2nGQQMHFyGzweMFX5IksNqPtweN2Mqo_AZyP6l7RCrkkFsg4XpcEHExFaxkNKXrOTRRMejb",
   },
@@ -66,11 +66,10 @@ function RaRuNavbar() {
     <>
       <nav
         onMouseLeave={() => setMenuOpen(false)}
-        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 bg-white/20 px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 ${
-          isSignInRoute || isTkRoute
-            ? "left-0 right-0 w-full max-w-none"
-            : "left-0 right-0 w-full max-w-none"
-        }`}
+        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 bg-white/20 px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 ${isSignInRoute || isTkRoute
+          ? "left-0 right-0 w-full max-w-none"
+          : "left-0 right-0 w-full max-w-none"
+          }`}
       >
         <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw]">
           <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
@@ -105,7 +104,7 @@ function RaRuNavbar() {
                       <div className="mb-4 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Discover</div>
                       <div className="space-y-2">
                         {[
-                          { href: "/Discover/RaRu", label: "RaRu", desc: "Digital solutions hub" },
+                          { href: "/Discover/RaRu", label: "Business Solutions", desc: "Digital solutions hub" },
                           { href: "/Discover/ADcraft", label: "ADcraft", desc: "Campaign creative" },
                           { href: "/Discover/Nexora", label: "Nexora", desc: "Automation systems" },
                           { href: "/Discover/Voxium", label: "Voxium", desc: "Voice-led experiences" },
@@ -214,9 +213,8 @@ function RaRuNavbar() {
 
         <div
           id="mobile-navigation"
-          className={`overflow-hidden md:hidden transition-all duration-300 ease-out ${
-            mobileMenuOpen ? "mt-4 max-h-[80vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-          }`}
+          className={`overflow-hidden md:hidden transition-all duration-300 ease-out ${mobileMenuOpen ? "mt-4 max-h-[80vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+            }`}
           aria-hidden={!mobileMenuOpen}
         >
           <div className="rounded-[24px] border border-white/45 bg-white/88 p-4 shadow-[0_18px_45px_rgba(5,7,18,0.14)] backdrop-blur-2xl">

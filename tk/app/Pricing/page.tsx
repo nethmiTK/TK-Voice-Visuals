@@ -8,34 +8,36 @@ const inter = Inter({
 
 const pricingTiers = [
   {
-    title: "Starter",
+    title: "Business Website",
     badge: "Focused Mastery",
     subtitle: "Single Discipline",
-    description: "Perfect for brands needing high-impact Voice or Video as a standalone asset.",
-    features: ["Premium Voice Production", "Cinematic Social Short-form", "Web Infrastructure"],
+    description: "Perfect for individuals and small businesses needing a professional online presence..",
+    features: ["Company Profile Website", "Up to 5 Pages", "Responsive Design", "Contact Form", "Basic SEO Setup"],
     priceCta: "Get Started",
     featured: false,
   },
   {
-    title: "Growth",
-    badge: "Most Strategic",
+    title: "Custom Business System",
+    badge: "Custom Business System",
     subtitle: "Integrated Presence",
-    description: "A synergy of cinematic video content and data-driven marketing strategy.",
+    description: "Ideal for businesses that need custom features and workflow automation.",
     features: [
-      "Full Video Strategy & Production",
-      "Performance Marketing Overlay",
-      "Brand Voice Architecture",
-      "Monthly Growth Review",
+      "Custom Web Application",
+      "User Management",
+      "Dashboard & Reports",
+      "Database Integration",
+      "Admin Panel",
+
     ],
     priceCta: "Scale Now",
     featured: true,
   },
   {
-    title: "Enterprise",
+    title: "Vendor Management System",
     badge: "The Ecosystem",
     subtitle: "Full Ecosystem",
-    description: "Total brand immersion. We become your outsourced creative and strategic department.",
-    features: ["Bespoke Web Development", "All-Access Creative Studio", "Global Strategy Consulting"],
+    description: "A complete multi-user platform with vendor and administration capabilities.",
+    features: ["Vendor Panel & Admin Panel", "Role-Based Access Control", "Order & Product Management", "Analytics & Reports"],
     priceCta: "Contact Us",
     featured: false,
   },
@@ -87,8 +89,7 @@ export default function PricingPage() {
             Transparent Value
           </span>
           <h1 className="text-[clamp(3.5rem,8vw,5.5rem)] font-black leading-[0.92] tracking-[-0.05em] text-[#25181d]">
-            Invest in Authority
-          </h1>
+            TK VOICE & VISUALS          </h1>
           <p className="mt-8 max-w-2xl text-2xl font-light leading-relaxed text-[#574048]">
             Choose a strategic partner for your brand&apos;s evolution. We bridge the gap between vision and visceral impact.
           </p>
@@ -99,11 +100,10 @@ export default function PricingPage() {
         {pricingTiers.map((tier) => (
           <article
             key={tier.title}
-            className={`flex flex-col rounded-[24px] p-8 transition-transform duration-500 hover:-translate-y-2 md:p-12 ${
-              tier.featured
-                ? "z-10 scale-[1.03] bg-[#b10e6b] text-white shadow-[0_40px_80px_rgba(177,14,107,0.2)]"
-                : "bg-white shadow-[0_20px_45px_rgba(177,14,107,0.05)]"
-            }`}
+            className={`flex flex-col rounded-[24px] p-8 transition-transform duration-500 hover:-translate-y-2 md:p-12 ${tier.featured
+              ? "z-10 scale-[1.03] bg-[#b10e6b] text-white shadow-[0_40px_80px_rgba(177,14,107,0.2)]"
+              : "bg-white shadow-[0_20px_45px_rgba(177,14,107,0.05)]"
+              }`}
           >
             <div className="mb-10">
               <div className={`mb-4 text-xs font-bold uppercase tracking-[0.24em] ${tier.featured ? "text-white/75" : "text-[#574048]"}`}>
@@ -126,11 +126,10 @@ export default function PricingPage() {
 
             <Link
               href="/Consultancy"
-              className={`rounded-[16px] px-6 py-4 text-center text-sm font-bold transition-colors ${
-                tier.featured
-                  ? "bg-white text-[#890051] hover:bg-[#ffecf1]"
-                  : "bg-[#ffe8ee] text-[#890051] hover:bg-[#f5dce3]"
-              }`}
+              className={`rounded-[16px] px-6 py-4 text-center text-sm font-bold transition-colors ${tier.featured
+                ? "bg-white text-[#890051] hover:bg-[#ffecf1]"
+                : "bg-[#ffe8ee] text-[#890051] hover:bg-[#f5dce3]"
+                }`}
             >
               {tier.priceCta}
             </Link>
@@ -145,18 +144,24 @@ export default function PricingPage() {
               <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-black/5 to-transparent" />
               <div className="relative z-10">
                 <h2 className="mb-12 font-serif text-4xl leading-tight text-[#890051] md:text-5xl">
-                  I. Creative <br /> Foundations
+                  I. Voice  <br /> Over
                 </h2>
 
                 <div className="mb-16">
                   <h3 className="mb-8 border-b border-[#f5dce3] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    Cinematic Video
+                    creative voice over
                   </h3>
                   <ul className="space-y-6">
                     {[
-                      ["Brand Manifesto Film", "from $8,500"],
-                      ["Social Narrative Series (6)", "$4,200"],
-                      ["Product Cinematography", "$3,800"],
+                      ["Commercial/Advertisement\n Up to 30 Seconds", "LKR 300"],
+                      ["Basic Voice Over Up to 1 Minute", "LKR 400"],
+                      ["Narration 1-3 Minutes", "LKR 500"],
+                      ["Story Dubbing Up to 5 Minutes", "LKR 800"],
+                      ["Voice Over for Video/YouTube per ", "LKR 500 per minute"],
+                      ["Voice Over for Animation/Cartoons", "LKR 700 per minute"],
+                      ["IVR/Phone System Voice Over", "LKR 1000 per minute"],
+                      ["Radio/Podcast Ad Voice Over", "LKR 300 per minute"],
+                      ["Voice Over for Reels/Shorts", "LKR 250 per 30 seconds"]
                     ].map(([label, price]) => (
                       <li key={label} className="flex items-baseline justify-between gap-4">
                         <span className="text-lg font-medium text-[#25181d]">{label}</span>
@@ -167,23 +172,6 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <div>
-                  <h3 className="mb-8 border-b border-[#f5dce3] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    Vocal Authority
-                  </h3>
-                  <ul className="space-y-6">
-                    {[
-                      ["Audio Identity System", "$2,500"],
-                      ["Podcast Production (Tier 1)", "$1,200/ep"],
-                    ].map(([label, price]) => (
-                      <li key={label} className="flex items-baseline justify-between gap-4">
-                        <span className="text-lg font-medium text-[#25181d]">{label}</span>
-                        <span className="flex-1 border-b border-dotted border-[#debec8] mx-4" />
-                        <span className="font-bold text-[#890051]">{price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
             </div>
 
@@ -193,7 +181,7 @@ export default function PricingPage() {
               <div className="absolute right-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-black/5 to-transparent" />
               <div className="relative z-10">
                 <h2 className="mb-12 font-serif text-4xl leading-tight text-[#890051] md:text-5xl">
-                  II. Digital <br /> Ecosystems
+                  II. Video  <br /> Editing
                 </h2>
 
                 <div className="mb-16">
@@ -202,9 +190,9 @@ export default function PricingPage() {
                   </h3>
                   <ul className="space-y-6">
                     {[
-                      ["Authority Positioning Audit", "$1,500"],
-                      ["Growth Engine Management", "15% spend"],
-                      ["Quarterly Brand Roadmap", "$3,000"],
+                      ["Basic Reel Up to 30 Seconds", "LKR 800"],
+                      ["Standard Reel Up to 60 Seconds", "LKR 1000"],
+                      ["Premium video Up to 90 Seconds", "LKR 3500"],
                     ].map(([label, price]) => (
                       <li key={label} className="flex items-baseline justify-between gap-4">
                         <span className="text-lg font-medium text-[#25181d]">{label}</span>
@@ -217,12 +205,12 @@ export default function PricingPage() {
 
                 <div>
                   <h3 className="mb-8 border-b border-[#debec8] pb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#574048]">
-                    Web Architecture
+                    Monthly Content Packages
                   </h3>
                   <ul className="space-y-6">
                     {[
-                      ["Bespoke Experience Design", "from $12k"],
-                      ["Immersive Landing Pages", "$2,800"],
+                      ["8 Reels (up to 30s), Basic Editing", "5000/month"],
+                      ["15 Reels (up to 1 min), Premium Editing,content planning,", "10000/month"],
                     ].map(([label, price]) => (
                       <li key={label} className="flex items-baseline justify-between gap-4">
                         <span className="text-lg font-medium text-[#25181d]">{label}</span>
@@ -267,49 +255,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-[5vw] py-24">
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-[24px] bg-[#ffe8ee] p-8 md:col-span-2">
-            <h2 className="max-w-md text-[clamp(2rem,4vw,3rem)] font-black tracking-[-0.05em] text-[#25181d]">
-              Engineered for the visionary few.
-            </h2>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-[#574048]">
-              We don't just deliver files; we build the communicative foundations of your business. Our cross-discipline approach ensures your voice matches your visuals, and your visuals match your values.
-            </p>
-          </div>
-
-          <div className="rounded-[24px] bg-[#890051] p-8 text-white">
-            <div className="mt-auto flex h-full flex-col justify-end">
-              <div className="text-6xl font-black">98%</div>
-              <div className="mt-4 max-w-xs text-xs font-bold uppercase tracking-[0.2em] text-white/85">
-                Client Retention Rate through Strategic Partnership
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[24px] bg-[#eddfe0] p-3 md:col-span-1">
-            <div className="h-full min-h-[220px] rounded-[20px] bg-[radial-gradient(circle_at_top,#25181d_0%,#574048_22%,#eddfe0_22%,#eddfe0_100%)] p-6 text-[#25181d]">
-              <div className="mt-auto flex h-full items-end justify-center text-center text-xl font-bold">
-                The Authority Protocol
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[24px] bg-[#fbe2e9] p-8 md:col-span-2">
-            <div className="flex items-center gap-6">
-              <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-[#890051] text-white">
-                <span className="text-4xl">▣</span>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-[#25181d]">The Authority Protocol</h3>
-                <p className="mt-2 text-[#574048]">
-                  A proprietary 4-step onboarding process that identifies brand leakage and reinforces your market position.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="bg-[#f5dce3] py-24">
         <div className="mx-auto max-w-3xl px-[5vw]">
