@@ -62,24 +62,25 @@ function RaRuNavbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  if (pathname === "/") {
+    return null;
+  }
+
   return (
     <>
       <nav
         onMouseLeave={() => setMenuOpen(false)}
-        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 bg-white/20 px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 ${isSignInRoute || isTkRoute
-          ? "left-0 right-0 w-full max-w-none"
-          : "left-0 right-0 w-full max-w-none"
-          }`}
+        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 ${isTkRoute ? "bg-[#fff8f8]" : "bg-white/20"} px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 left-0 right-0 w-full max-w-none`}
       >
         <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw]">
           <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
             <Image
-              src="/site_img/logo.jpg"
+              src="/site_img/logobg.png"
               alt="TK Voice &amp; Visuals"
               width={44}
               height={44}
               priority
-              className="h-10 w-10 rounded-full object-cover ring-1 ring-white/60 md:h-11 md:w-11"
+              className="h-10 w-10 rounded-full object-cover ring-1   md:h-11 md:w-11"
             />
             {/* <span className={`${playfair.className} max-w-[120px] text-[15px] font-bold leading-none tracking-[-0.05em] text-[#890051] sm:max-w-none sm:text-[16px] md:text-[24px]`}>
                  TK <br></br>Voice &amp; Visuals

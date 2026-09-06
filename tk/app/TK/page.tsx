@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Inter, Playfair_Display } from "next/font/google";
+import DiscoverPage from "../Discover/page";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -15,10 +16,19 @@ const playfair = Playfair_Display({
 
 export default function TKPage() {
 	return (
-		<main className={`${inter.className} bg-[#fff8f8] text-[#25181d] min-h-screen`}>
+		<main 
+			className={`${inter.className} text-[#25181d] w-full flex flex-col`}
+			style={{ 
+				backgroundImage: "url('/site_img/FIRSTPAGE%20BG.png')", 
+				backgroundSize: 'cover', 
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat',
+				backgroundAttachment: 'fixed'
+			}}
+		>
 			{/* Hero Section */}
-			<section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-[5vw] pt-8 sm:pt-12 md:pt-20 pb-12 md:pb-20 overflow-hidden">
-				<div className="absolute inset-0 opacity-20">
+			<section className="relative min-h-[calc(100vh-64px)] w-full flex items-center justify-center px-4 sm:px-6 md:px-[5vw] pt-8 sm:pt-12 md:pt-20 pb-12 md:pb-20">
+				<div className="absolute inset-0 opacity-20 pointer-events-none">
 					<div className="absolute -top-20 -left-20 sm:-top-40 sm:-left-40 w-64 sm:w-96 md:w-[500px] h-64 sm:h-96 md:h-[500px] bg-[#b10e6b] rounded-full mix-blend-multiply filter blur-3xl opacity-40" />
 					<div className="absolute -bottom-20 -right-20 sm:-bottom-40 sm:-right-40 w-64 sm:w-96 md:w-[500px] h-64 sm:h-96 md:h-[500px] bg-[#890051] rounded-full mix-blend-multiply filter blur-3xl opacity-40" />
 				</div>
@@ -34,8 +44,7 @@ export default function TKPage() {
 					</div>
 
 					<p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-[#574048] font-light px-2">
-						Elevate your brand through cinematic visuals, strategic audio design, and digital innovation. We craft experiences that command attention and drive results.
-					</p>
+						Visual Think To Reality					</p>
 
 					<div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 pt-4 sm:pt-6 md:pt-8">
 						<Link
@@ -54,45 +63,10 @@ export default function TKPage() {
 				</div>
 			</section>
 
-
-			{/* Why Choose Us */}
-			<section className="px-4 sm:px-6 md:px-[5vw] py-12 sm:py-16 md:py-24">
-				<div className="mx-auto max-w-6xl">
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
-						{[
-							{ label: "Editorial Quality", desc: "Every frame and syllable treated as art." },
-							{ label: "Strategic Depth", desc: "Creativity aligned with your business goals." },
-							{ label: "Global Reach", desc: "Scalable solutions for worldwide impact." },
-						].map((item, idx) => (
-							<div key={idx} className="space-y-2 sm:space-y-3">
-								<div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-[#ffd9e4] flex items-center justify-center text-base sm:text-lg font-bold text-[#b10e6b]">
-									{idx + 1}
-								</div>
-								<h4 className="text-base sm:text-lg md:text-xl font-bold text-[#25181d]">{item.label}</h4>
-								<p className="text-xs sm:text-sm md:text-base text-[#574048]">{item.desc}</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			{/* CTA Section */}
-			<section className="px-4 sm:px-6 md:px-[5vw] py-12 sm:py-16 md:py-24 bg-gradient-to-r from-[#b10e6b] to-[#890051] text-white">
-				<div className="mx-auto max-w-3xl text-center space-y-4 sm:space-y-6 md:space-y-8">
-					<h2 className={`${playfair.className} text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-light leading-tight tracking-tighter`}>
-						Ready to Create <em>Impact</em>?
-					</h2>
-					<p className="text-xs sm:text-sm md:text-lg max-w-xl mx-auto opacity-90 px-2">
-						Let's transform your vision into a world-class digital reality. Schedule a consultation with our creative strategists today.
-					</p>
-					<Link
-						href="/Consultancy"
-						className="inline-block bg-white text-[#b10e6b] px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full font-bold uppercase tracking-widest text-xs sm:text-sm hover:scale-105 transition-transform"
-					>
-						Book Consultation
-					</Link>
-				</div>
-			</section>
+			{/* Discover Section Content */}
+			<div className="w-full bg-transparent">
+				<DiscoverPage isEmbedded={true} />
+			</div>
 		</main>
 	);
 }

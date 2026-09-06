@@ -41,9 +41,9 @@ const whyChoose = [
   { title: "Partnership Focused", description: "We work as an extension of your team." },
 ];
 
-export default function DiscoverPage() {
+export default function DiscoverPage({ isEmbedded = false }: { isEmbedded?: boolean }) {
   return (
-    <main className={`${inter.className} bg-[#fff8f8] text-[#25181d]`}>
+    <main className={`${inter.className} ${isEmbedded ? "bg-transparent" : "bg-[#fff8f8]"} text-[#25181d]`}>
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 pb-24 pt-40 md:px-8">
         <div className="max-w-4xl">
@@ -126,7 +126,7 @@ export default function DiscoverPage() {
       </section>
 
       {/* Why Choose Us — dark bg: perfect for transparent→#B10E6B */}
-      <section className="bg-[#fff0f3] py-24">
+      <section className={`${isEmbedded ? "bg-transparent" : "bg-[#fff0f3]"} py-24`}>
         <div className="mx-auto max-w-7xl px-6 md:px-8">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <ScrollFillText
