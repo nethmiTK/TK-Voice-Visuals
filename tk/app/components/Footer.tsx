@@ -23,49 +23,18 @@ export default function Footer() {
 						<div className={styles.brand}>TK VOICE &amp; VISUALS</div>
 						<p className={styles.desc}>
 							A global creative consortium specializing in the architecture of elite
-							brand perception. Headquartered in London, serving the world&apos;s most
-							discerning houses.
+							brand perception.
 						</p>
 					</div>
 
-					<div>
-						<div className={styles.heading}>Philosophy</div>
-						<nav className={styles.col}>
-							<Link href="/Resources" className={styles.link}>
-								The Manifesto
-							</Link>
-							<Link href="/Solutions" className={styles.link}>
-								Linguistic Research
-							</Link>
-							<Link href="/Discover/ADcraft" className={styles.link}>
-								Case Studies
-							</Link>
-						</nav>
-					</div>
-
-					<div>
-						<div className={styles.heading}>Global</div>
-						<nav className={styles.col}>
-							<Link href="/About" className={styles.link}>
-								New York
-							</Link>
-							<Link href="/About" className={styles.link}>
-								Paris
-							</Link>
-							<Link href="/About" className={styles.link}>
-								Tokyo
-							</Link>
-						</nav>
-					</div>
 
 					<div>
 						<div className={styles.heading}>Contact</div>
 						<Link href="mailto:enquiries@tkvv.com" className={styles.mail}>
-							enquiries@tkvv.com
-						</Link>
+							https://tkvoicevisuals.me						</Link>
 					</div>
 				</div>
-
+				{/* 
 				<div className={styles.bottom}>
 					<div>© 2026 TK Voice &amp; Visuals. All Rights Reserved.</div>
 					<div className={styles.legal}>
@@ -79,7 +48,7 @@ export default function Footer() {
 							Cookies
 						</Link>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</footer>
 	);

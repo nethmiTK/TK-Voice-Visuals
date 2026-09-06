@@ -1,4 +1,7 @@
+"use client";
+
 import { Inter } from "next/font/google";
+import ScrollFillText from "../components/ScrollFillText";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,18 +17,41 @@ export default function ConsultancyPage() {
           <aside className="lg:col-span-4 space-y-12">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-[#a90b66] mb-6">Strategic Partnership</p>
-              <h1 className="font-serif text-[64px] leading-[0.95] font-light tracking-tight">Initiate<br />Your <em>Consultation</em></h1>
-              <p className="mt-6 max-w-md text-[#574048] leading-7">Begin a partnership rooted in creative precision and strategic allure. Our senior consultants review every inquiry personally to ensure complete brand alignment.</p>
+              <ScrollFillText
+                as="h1"
+                className="font-serif text-[64px] leading-[0.95] font-light tracking-tight"
+                wrapperClassName="mb-6"
+                fillDirection="top"
+                fillEnd={0.8}
+              >
+                Initiate<br />Your <em>Consultation</em>
+              </ScrollFillText>
+              <ScrollFillText
+                as="p"
+                className="max-w-md leading-7"
+                fillDirection="left"
+                fillEnd={0.7}
+              >
+                Begin a partnership rooted in creative precision and strategic allure. Our senior consultants review every inquiry personally to ensure complete brand alignment.
+              </ScrollFillText>
             </div>
 
             <div className="rounded-2xl bg-[#fff0f3] p-6">
-              <h4 className="font-display font-bold mb-4">Direct Channels</h4>
+              <ScrollFillText
+                as="h4"
+                className="font-display font-bold"
+                wrapperClassName="mb-4"
+                fillDirection="left"
+                fillEnd={0.65}
+              >
+                Direct Channels
+              </ScrollFillText>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
                   <div className="h-10 w-10 rounded-full bg-[#ffd9e4] flex items-center justify-center">☎</div>
                   <div>
                     <div className="text-[9px] uppercase tracking-wider text-[#8b7079]">Priority Line</div>
-                    <div className="text-lg font-bold text-[#a90b66]">075 263 2946<br></br>077 785 8521</div>
+                    <div className="text-lg font-bold text-[#a90b66]">075 263 2946<br />077 785 8521</div>
                   </div>
                 </div>
 
@@ -37,11 +63,7 @@ export default function ConsultancyPage() {
                   </div>
                 </div>
               </div>
-              <blockquote className="mt-6 italic text-sm text-[#6b5a5e]">&quot;Modernism is not a style; it is an attitude of strategic clarity and purposeful design.&quot;</blockquote>
-              <div className="mt-4 text-[10px] uppercase tracking-widest text-[#8b7079] font-bold">Rafael Rajapaksa, CEO</div>
             </div>
-
-
           </aside>
 
           {/* Right column: form */}
@@ -51,7 +73,14 @@ export default function ConsultancyPage() {
               <div className="space-y-6">
                 <div className="flex items-center gap-6">
                   <div className="w-12 h-12 rounded-full bg-[#a90b66] text-white flex items-center justify-center font-bold">01</div>
-                  <h2 className="text-2xl font-display font-light">Personal &amp; Professional Identity</h2>
+                  <ScrollFillText
+                    as="h2"
+                    className="text-2xl font-display font-light"
+                    fillDirection="left"
+                    fillEnd={0.68}
+                  >
+                    Personal &amp; Professional Identity
+                  </ScrollFillText>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <input placeholder="Full name" className="rounded-xl p-4 bg-[#fff] placeholder:text-[#cbbec3] outline-none" />
@@ -65,19 +94,23 @@ export default function ConsultancyPage() {
               <div className="space-y-6">
                 <div className="flex items-center gap-6">
                   <div className="w-12 h-12 rounded-full bg-[#a90b66] text-white flex items-center justify-center font-bold">02</div>
-                  <h2 className="text-2xl font-display font-light">Engagement Context</h2>
+                  <ScrollFillText
+                    as="h2"
+                    className="text-2xl font-display font-light"
+                    fillDirection="left"
+                    fillEnd={0.68}
+                  >
+                    Engagement Context
+                  </ScrollFillText>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <select className="rounded-xl p-4 bg-[#fff] outline-none">
-                    <option>Brand Voice &amp; Strategy</option>
-                    <option>Editorial Adcraft</option>
-                    <option>Vocal Production</option>
-                  </select>
-                  <select className="rounded-xl p-4 bg-[#fff] outline-none">
-                    <option>$25k - $50k</option>
-                    <option>$50k - $100k</option>
-                    <option>$100k+</option>
+                    <option>  Voice Over &amp; Strategy</option>
+                    <option>Video Editing &amp; Creation</option>
+                    <option>Web Design</option>
+                    <option>Mobile App Develop</option>
+
                   </select>
                 </div>
 
@@ -88,37 +121,23 @@ export default function ConsultancyPage() {
               <div className="space-y-6">
                 <div className="flex items-center gap-6">
                   <div className="w-12 h-12 rounded-full bg-[#a90b66] text-white flex items-center justify-center font-bold">03</div>
-                  <h2 className="text-2xl font-display font-light">Scheduling &amp; Assets</h2>
+                  <ScrollFillText
+                    as="h2"
+                    className="text-2xl font-display font-light"
+                    fillDirection="left"
+                    fillEnd={0.68}
+                  >
+                    Scheduling &amp; Assets
+                  </ScrollFillText>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 24<br /><span className="block font-bold">09:00 AM</span></button>
-                  <button type="button" className="rounded-xl bg-[#a90b66] p-4 text-white shadow-lg">Oct 25<br /><span className="block font-bold">11:30 AM</span></button>
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 26<br /><span className="block font-bold">02:00 PM</span></button>
-                  <button type="button" className="rounded-xl bg-[#fff0f3] p-4">Oct 28<br /><span className="block font-bold">10:00 AM</span></button>
-                </div>
+
 
                 <div className="border-2 border-dashed border-[#e7cfd6] rounded-2xl p-8 text-center">
                   <div className="text-3xl text-[#e0b8c8]">⇪</div>
                   <p className="mt-4 text-sm text-[#8b7079]">Drag and drop files here (PDF, DOCX, ZIP — max 25MB)</p>
                 </div>
 
-                <div>
-                  <div className="flex items-center gap-6">
-                    <label className="inline-flex items-center gap-3 text-sm">
-                      <input type="radio" name="contact" defaultChecked className="w-4 h-4 text-[#a90b66]" />
-                      <span>Email</span>
-                    </label>
-                    <label className="inline-flex items-center gap-3 text-sm">
-                      <input type="radio" name="contact" className="w-4 h-4 text-[#a90b66]" />
-                      <span>Phone Call</span>
-                    </label>
-                    <label className="inline-flex items-center gap-3 text-sm">
-                      <input type="radio" name="contact" className="w-4 h-4 text-[#a90b66]" />
-                      <span>WhatsApp</span>
-                    </label>
-                  </div>
-                </div>
               </div>
 
               <div className="mt-6">

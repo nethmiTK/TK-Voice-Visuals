@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Inter, Playfair_Display } from 'next/font/google';
+import ScrollFillText from '../components/ScrollFillText';
 
 const inter = Inter({ subsets: ['latin'] });
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'] });
@@ -66,12 +67,23 @@ export default function AboutPage() {
           <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#b10e6b] mb-6 block">
             Legacy Architecture
           </span>
-          <h1 className={`${playfair.className} text-[clamp(2.5rem,8vw,5rem)] md:text-[4rem] leading-[1.1] mb-6 md:mb-8 italic font-light`}>
-            We craft the voices that lead and the <span className="not-italic text-[#b10e6b] font-normal">visuals that endure.</span>
-          </h1>
-          <p className="text-[clamp(0.875rem,2vw,1.125rem)] text-[#574048] max-w-2xl mx-auto leading-relaxed md:leading-8">
-            TK Voice &amp; Visuals is the silent architect behind the world's most influential legacies, merging elite editorial precision with 2026 digital sophistication.
-          </p>
+          <ScrollFillText
+            as="h1"
+            className={`${playfair.className} text-[clamp(2.5rem,8vw,5rem)] md:text-[4rem] leading-[1.1] mb-6 md:mb-8 italic font-light`}
+            wrapperClassName="mb-6 md:mb-8"
+            fillDirection="top"
+            fillEnd={0.8}
+          >
+            We craft the voices that lead and the visuals that endure.
+          </ScrollFillText>
+          <ScrollFillText
+            as="p"
+            className="text-[clamp(0.875rem,2vw,1.125rem)] text-[#574048] max-w-2xl mx-auto leading-relaxed md:leading-8"
+            fillDirection="left"
+            fillEnd={0.7}
+          >
+            TK Voice &amp; Visuals is the silent architect behind the world&apos;s most influential legacies, merging elite editorial precision with 2026 digital sophistication.
+          </ScrollFillText>
         </div>
       </section>
 
@@ -79,10 +91,23 @@ export default function AboutPage() {
       <section className="py-16 md:py-32 px-4 sm:px-6 md:px-[5vw]">
         <div className="max-w-7xl mx-auto w-full">
           <div className="mb-12 md:mb-20">
-            <h2 className={`${playfair.className} text-[clamp(2rem,6vw,3rem)] font-light mb-4`}>Our Core Pillars</h2>
-            <p className="text-[#574048] text-sm md:text-base max-w-xl">
+            <ScrollFillText
+              as="h2"
+              className={`${playfair.className} text-[clamp(2rem,6vw,3rem)] font-light`}
+              wrapperClassName="mb-4"
+              fillDirection="left"
+              fillEnd={0.72}
+            >
+              Our Core Pillars
+            </ScrollFillText>
+            <ScrollFillText
+              as="p"
+              className="text-[#574048] text-sm md:text-base max-w-xl"
+              fillDirection="left"
+              fillEnd={0.65}
+            >
               Our core pillars of brand excellence, each a specialized ecosystem for modern authority.
-            </p>
+            </ScrollFillText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[300px] md:auto-rows-[350px]">
@@ -139,20 +164,45 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-16">
             <div>
-              <h2 className={`${playfair.className} text-[clamp(1.75rem,5vw,2.5rem)] font-light mb-6`}>
+              <ScrollFillText
+                as="h2"
+                className={`${playfair.className} text-[clamp(1.75rem,5vw,2.5rem)] font-light`}
+                wrapperClassName="mb-6"
+                fillDirection="left"
+                fillEnd={0.72}
+              >
                 Strategic Foundations
-              </h2>
-              <p className="text-[#574048] text-sm md:text-base leading-relaxed">
-                We don't build websites or launch ads; we architect digital presence that stands the test of time.
-              </p>
+              </ScrollFillText>
+              <ScrollFillText
+                as="p"
+                className="text-[#574048] text-sm md:text-base leading-relaxed"
+                fillDirection="left"
+                fillEnd={0.65}
+              >
+                We don&apos;t build websites or launch ads; we architect digital presence that stands the test of time.
+              </ScrollFillText>
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {pillars.map((pillar, idx) => (
                 <div key={idx} className="flex flex-col gap-4">
                   <div className="text-2xl md:text-3xl text-[#b10e6b]">{pillar.icon}</div>
-                  <h4 className="font-semibold text-sm md:text-base text-[#25181d]">{pillar.title}</h4>
-                  <p className="text-xs md:text-sm text-[#574048] leading-relaxed">{pillar.description}</p>
+                  <ScrollFillText
+                    as="h4"
+                    className="font-semibold text-sm md:text-base text-[#25181d]"
+                    fillDirection="left"
+                    fillEnd={0.68}
+                  >
+                    {pillar.title}
+                  </ScrollFillText>
+                  <ScrollFillText
+                    as="p"
+                    className="text-xs md:text-sm text-[#574048] leading-relaxed"
+                    fillDirection="left"
+                    fillEnd={0.62}
+                  >
+                    {pillar.description}
+                  </ScrollFillText>
                 </div>
               ))}
             </div>
@@ -197,7 +247,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Philosophy Section */}
+      {/* Philosophy Section — white text on dark image, no fill needed */}
       <section className="relative min-h-[50vh] md:min-h-[70vh] flex items-center overflow-hidden">
         <img
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUamMgbsvR6Y0j9-5BtJR78RPOtMwVflwJT8iyHoWqvioQhq0pEFK_HCBkWDhfzqZcxFRK4gvhIvHNr8TdhuEiZb6uT_i674FqbM6ipP11IbR6dSJY6bAUaCBQ5nKjob8hgm7u7i6Nml9OB97RobACn-AxtGGuE-gW5Ti0KNh2DoY0py5A55Z4iv-ON4dLWHZ6dMPIUsxPK_qdg4g0wTdh1olk1L6zOueO3ro0h1ELZPJDDW6DJ45w5SP13uiE_0MgZFyCBK75CC4e"
@@ -213,7 +263,7 @@ export default function AboutPage() {
               Our Philosophy
             </h2>
             <p className={`${playfair.className} text-white/80 text-base md:text-lg leading-relaxed mb-8 italic font-light`}>
-              "Authority isn't shouted. It is felt in the precision of the message and the clarity of the vision."
+              &quot;Authority isn&apos;t shouted. It is felt in the precision of the message and the clarity of the vision.&quot;
             </p>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0 bg-white/20" />
@@ -229,12 +279,23 @@ export default function AboutPage() {
       {/* Final CTA */}
       <section className="py-16 md:py-32 px-4 sm:px-6 md:px-[5vw] text-center bg-[#f5dce3]">
         <div className="max-w-4xl mx-auto w-full">
-          <h2 className={`${playfair.className} text-[clamp(2rem,6vw,3.5rem)] font-light mb-6 md:mb-8`}>
+          <ScrollFillText
+            as="h2"
+            className={`${playfair.className} text-[clamp(2rem,6vw,3.5rem)] font-light`}
+            wrapperClassName="mb-6 md:mb-8"
+            fillDirection="top"
+            fillEnd={0.78}
+          >
             Ready to Build Your Legacy?
-          </h2>
-          <p className="text-[#574048] text-sm md:text-base mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed">
+          </ScrollFillText>
+          <ScrollFillText
+            as="p"
+            className="text-[#574048] text-sm md:text-base mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed"
+            fillDirection="left"
+            fillEnd={0.68}
+          >
             We take on a limited number of partner projects each year to ensure the highest fidelity of execution. Secure your position in the 2026 queue.
-          </p>
+          </ScrollFillText>
           <Link
             href="/Consultancy"
             className="inline-block bg-[#b10e6b] text-white px-8 md:px-10 py-3 md:py-5 rounded-xl font-semibold text-sm md:text-base hover:shadow-lg hover:translate-y-[-2px] transition-all active:scale-95"

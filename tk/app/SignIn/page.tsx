@@ -49,10 +49,9 @@ export default function SignInPage() {
 						<div className="absolute bottom-0 left-0 max-w-[520px] p-8 text-white md:p-12 lg:p-16">
 							<div className="mb-7 h-[2px] w-16 bg-white/50" />
 							<h1 className={`${playfair.className} text-[clamp(3.4rem,6vw,5.35rem)] italic leading-[0.9] tracking-[-0.045em] text-white`}>
-								The New
+								VISUAL THINK TO
 								<br />
-								Standard.
-							</h1>
+								REALITY							</h1>
 							<p className="mt-7 max-w-md text-[clamp(1rem,1.55vw,1.24rem)] leading-[1.68] text-white/78">
 								Experience the convergence of elite visual storytelling and strategic creative intelligence.
 							</p>
@@ -93,7 +92,7 @@ export default function SignInPage() {
 
 								<div className="pt-6">
 									<button type="submit" className="flex w-full items-center justify-center gap-4 rounded-[18px] bg-gradient-to-r from-[#890051] via-[#b10e6b] to-[#cf1d76] px-10 py-6 text-[13px] font-bold uppercase tracking-[0.28em] text-white shadow-[0_18px_40px_rgba(177,14,107,0.28)] transition-transform hover:-translate-y-0.5">
-										Enter Studio
+										Go Studio
 										<ArrowIcon />
 									</button>
 								</div>
@@ -106,7 +105,7 @@ export default function SignInPage() {
 					</div>
 				</section>
 			</main>
-
+			{/* 
 			<footer className="relative z-10 flex flex-col items-center justify-between gap-6 px-[5vw] pb-8 pt-6 text-[10px] uppercase tracking-[0.34em] text-[#b89aa3] md:flex-row">
 				<div className="text-center md:text-left">&copy; 2024 TK Voice &amp; Visuals. All rights reserved.</div>
 				<div className="flex flex-wrap justify-center gap-x-10 gap-y-3">
@@ -114,7 +113,7 @@ export default function SignInPage() {
 					<Link href="/" className="transition-colors hover:text-[#b10e6b]">Terms of Service</Link>
 					<Link href="/" className="font-bold text-[#b10e6b] transition-colors hover:text-[#890051]">Studio Hub</Link>
 				</div>
-			</footer>
+			</footer> */}
 		</div>
-  );
+	);
 }
