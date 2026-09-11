@@ -48,7 +48,7 @@ export default function WorkflowPage() {
             <h2 className="text-sm font-bold uppercase tracking-[0.4em] text-[#890051] mb-6">Strategy First</h2>
             <h3 className="text-4xl font-semibold leading-tight text-[#25181d] mb-8">Behind The Work: Strategic Alchemy</h3>
             <p className="text-lg text-[#574048] leading-relaxed mb-8">
-              We don't just create content. We decode your audience, craft narratives that resonate, and translate them into sensory experiences.
+              We don't just create content. We decode your audience, craft narratives that resonate  and translate them into sensory experiences.
             </p>
             <div className="space-y-6">
               <div className="flex gap-4 items-start">

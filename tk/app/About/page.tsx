@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Inter, Playfair_Display } from 'next/font/google';
 import ScrollFillText from '../components/ScrollFillText';
+import HeroReveal from '../components/HeroReveal';
 
 const inter = Inter({ subsets: ['latin'] });
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'] });
@@ -16,14 +17,14 @@ export default function AboutPage() {
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-rjRPksgvJJQPkEMNgQjm5_HIPhzZKQRbqSzkk-_pU7eq1UuH_55YhYPE0xOLwHK6TokSTgMozc_XC8HX4x8We-FPDNL4RQslD5BQ4DVc77bhTDwkDPz8x4Lxm-iuRDP1S3iY-j0PapIKq6nSjlRlPJVlUwwKo7iobGstJt8CT3-KKzoBGwEObwehW5bZtjrdpxeEBBDTymzEaq2BkveNPR3EfB2kaMWYWHsintl565cbG-yy-aPK6JJ8S1V2WcVEleboIljGgTFR',
     },
     {
-      title: 'Vedio Editing',
+      title: 'Video Editing',
       description: 'Visual narratives that command immediate attention.',
       category: 'Visual',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB3_T7JF4IO31FbTCepYATh6_RT80wp7JxgiHuP9ZuJb3QXWkpiAXNXa4uhYCgmE-bMmCaFwfGx-OHaIEzUhwnWiCF2yTabPFvXk0_A4-3-rSbpOvF9DL-2aU3J2eAyNPBKxkoEPqVqjgNxnbAo5Yq4CGtwwE6n8FFsUBu5FFDyXiiXMTVQk95Ma8eYFIG3k81WW12V9Dp7QWmoykE5kBsf7EP9M2J4Wix4DlGpMhEGSd-0yDTJxiNKRbRMlnoyXD9NVvivTLHj4v_2',
     },
     {
-      title: 'RaRu',
-      description: 'Rare insights. Unmatched execution. Strategic research for market dominance.',
+      title: 'Business strategy',
+      description: 'Tk insights. Unmatched execution. Strategic research for market dominance.',
       category: 'Strategy',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZrdat-QCVZP4SWem9Zb_LwyU_ve1qquzQBxKG4UZ9_iJXetysRm4CDDhmC8JCLQJM6CJMfBPb9R2DeLfmwp20HQ1OYAWjxcJgmxZd8nD3s08bf4Z2niYyzod_l-M2E9VFoJelr6avYvc4yyxOK_RnpXKZ6xn_lX73s33rIIHDilEh5tGqBsZoaPCRAekKrfsdP0-LXY7SZF8x3HQP9MaeB1NBLbTTSdlKfWMx4ImYMYfJU55162iKkK-yb8s5gQvyzYzKdVeD3ftq',
     }
@@ -61,9 +62,9 @@ export default function AboutPage() {
 
   return (
     <main className={`${inter.className} bg-[#fff8f8] text-[#25181d] overflow-x-hidden`}>
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] md:min-h-screen flex items-center pt-32 md:pt-24 px-4 sm:px-6 md:px-[5vw]">
-        <div className="max-w-5xl mx-auto text-center w-full">
+      {/* Hero Section — scroll-controlled image reveal/erase */}
+      <HeroReveal imageSrc="/site_img/ABOUT.jpg" bgColor="#fff8f8">
+        <div className="max-w-5xl mx-auto text-center w-full px-4 sm:px-6 md:px-[5vw]">
           <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#b10e6b] mb-6 block">
             Legacy Architecture
           </span>
@@ -85,7 +86,7 @@ export default function AboutPage() {
             TK Voice &amp; Visuals is the silent architect behind the world&apos;s most influential legacies, merging elite editorial precision with 2026 digital sophistication.
           </ScrollFillText>
         </div>
-      </section>
+      </HeroReveal>
 
       {/* The Signature 5 - Bento Grid */}
       <section className="py-16 md:py-32 px-4 sm:px-6 md:px-[5vw]">
@@ -268,7 +269,7 @@ export default function AboutPage() {
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0 bg-white/20" />
               <div>
-                <div className="text-white font-semibold text-sm md:text-base">Thaddeus K.</div>
+                <div className="text-white font-semibold text-sm md:text-base">TK NETHMI</div>
                 <div className="text-white/60 text-[10px] md:text-xs uppercase tracking-widest">Founding Principal</div>
               </div>
             </div>

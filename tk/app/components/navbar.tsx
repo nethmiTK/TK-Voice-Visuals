@@ -90,7 +90,7 @@ function RaRuNavbar() {
           <div className="hidden items-center gap-8 md:flex">
             <div className="relative">
               <Link
-                href="/Discover"
+                href="/TK"
                 onMouseEnter={() => setMenuOpen(true)}
                 className="group flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
               >
