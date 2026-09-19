@@ -1,4 +1,7 @@
+"use client";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "../../components/navbar";
 const inter = Inter({
@@ -15,24 +18,24 @@ const playfair = Playfair_Display({
 
 const serviceCards = [
 	{
-		title: "Strategic Precision",
-		icon: "precision_manufacturing",
-		text: "Data-driven roadmaps that align every pixel with your long-term business objectives.",
+		title: "PORTFOLIO WEBSITE",
+		icon: "language",
+		text: "Premium portfolio websites designed to present your brand, work, and expertise with a powerful digital presence.",
 	},
 	{
-		title: "Global Infrastructure",
-		icon: "public",
-		text: "Scalable, secure, and blazing-fast cloud architectures built for worldwide reach.",
+		title: "MOBILE APPLICATION",
+		icon: "phone_iphone",
+		text: "Modern mobile experiences engineered for performance, usability, and seamless interaction across devices.",
 	},
 	{
-		title: "Conversion Engineering",
-		icon: "trending_up",
-		text: "Sophisticated UX/UI patterns designed to turn visitors into loyal brand advocates.",
+		title: "WEB SYSTEM",
+		icon: "web",
+		text: "Scalable web systems built to streamline operations, manage data, and turn complex business processes into simple digital experiences.",
 	},
 	{
-		title: "Elite Support",
-		icon: "verified_user",
-		text: "24/7 white-glove maintenance and concierge-level technical assistance.",
+		title: "DESKTOP APPLICATION",
+		icon: "desktop_windows",
+		text: "Reliable desktop applications built around your workflow with powerful functionality, efficiency, and long-term scalability.",
 	},
 ];
 
@@ -99,6 +102,31 @@ function MaterialIcon({ name, filled = false }: { name: string; filled?: boolean
 }
 
 export default function RaRuPage() {
+	const technologies = ["Node.js", "React", "Next.js", "Angular", "Spring Boot", "MySQL", "MongoDB"];
+	const [techIndex, setTechIndex] = useState(0);
+	const [isTechHovered, setIsTechHovered] = useState(false);
+	
+	const videoRef = useRef<HTMLVideoElement>(null);
+	const isVideoInView = useInView(videoRef, { amount: 0.3 });
+
+	useEffect(() => {
+		if (videoRef.current) {
+			if (isVideoInView) {
+				videoRef.current.play().catch(() => {});
+			} else {
+				videoRef.current.pause();
+			}
+		}
+	}, [isVideoInView]);
+
+	useEffect(() => {
+		if (isTechHovered) return;
+		const interval = setInterval(() => {
+			setTechIndex((prev) => (prev + 1) % technologies.length);
+		}, 2000);
+		return () => clearInterval(interval);
+	}, [isTechHovered, technologies.length]);
+
 	return (
 		<main className={`${inter.className} bg-[#fff8f8] text-[#25181d] selection:bg-[#b10e6b]/20`}>
 			<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -107,7 +135,7 @@ export default function RaRuPage() {
 
 			<Navbar variant="raru" forceVisible />
 
-			<section className="relative min-h-screen overflow-hidden px-[5vw] pb-16 pt-32">
+			<section className="relative min-h-screen overflow-hidden px-[5vw] pb-16 pt-32 flex items-center justify-center">
 				<div className="pointer-events-none absolute inset-0">
 					<img
 						className="h-full w-full object-cover opacity-10"
@@ -115,56 +143,99 @@ export default function RaRuPage() {
 						src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuetVLbXiMia54Jmgy3kcFsspIIUC1-nnD5wykDiaMJ14iBftcr55eTnS_rtJPJWaECXx8f1h8mt18yPNx1wuWFSCPD1UND4Mt-gx8Ft9LB-C89de8vd7xr1OKBffy5DoH1GTYFu8hZPOKK3rF8kKmUVSu_0Pgg5C53Mk7buQ983uHlNsot-F2LeZxJCYcWnL5GFtHr2nGQQMHFyGzweMFX5IksNqPtweN2Mqo_AZyP6l7RCrkkFsg4XpcEHExFaxkNKXrOTRRMejb"
 					/>
 				</div>
-				<div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-					<span className="mb-6 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#b10e6b]">Digital Excellence Redefined</span>
-					<h1 className={`${playfair.className} text-[clamp(3.4rem,7.5vw,7.7rem)] italic leading-[0.92] tracking-[-0.05em] text-[#25181d]`}>
-						Architecting Your <br /> <span className="text-[#b10e6b]">Digital Legacy</span>
-					</h1>
-					<p className="mt-8 max-w-3xl text-[clamp(1rem,1.45vw,1.25rem)] leading-[1.7] text-[#574048]">
-						Elite digital solutions for visionary brands. We blend high-fashion aesthetics with industrial-grade engineering to build your future.
-					</p>
-					<div className="mt-12 flex flex-col gap-6 sm:flex-row">
-						<button className="rounded-2xl bg-gradient-to-b from-[#b10e6b] to-[#a90b66] px-10 py-5 text-lg font-bold tracking-tight text-white shadow-xl shadow-[#b10e6b]/20 transition-transform hover:scale-[1.02]">
-							Start Your Project
-						</button>
-						<button className="rounded-2xl bg-[#fff0f3] px-10 py-5 text-lg font-bold tracking-tight text-[#25181d] transition-colors hover:bg-white hover:shadow-lg">
-							View Case Studies
-						</button>
-					</div>
+				<div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2 mt-12">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.96 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+						className="relative aspect-[4/3] lg:aspect-[4/4] xl:aspect-video w-full overflow-hidden rounded-[32px] border border-[#fbe2e9] shadow-2xl shadow-[#b10e6b]/10 order-first"
+					>
+						<video 
+							ref={videoRef}
+							className="absolute inset-0 h-full w-full object-cover" 
+							src="/site/_img/INTRO.mp4" 
+							muted 
+							loop 
+							playsInline
+						/>
+					</motion.div>
+					
+					<motion.div 
+						initial={{ opacity: 0, x: 40 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.8, delay: 0.2, ease: [0.76, 0, 0.24, 1] }}
+						className="flex flex-col text-center lg:text-left"
+					>
+						<div>
+							<span className="mb-6 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#b10e6b]">Digital Excellence Redefined</span>
+						</div>
+						<h1 className={`${playfair.className} text-[clamp(3.2rem,5vw,5.5rem)] italic leading-[1] tracking-[-0.03em] text-[#25181d]`}>
+							Architecting Your <br /> <span className="text-[#b10e6b]">Digital Legacy</span>
+						</h1>
+						<p className="mt-8 max-w-xl mx-auto lg:mx-0 text-[clamp(1rem,1.25vw,1.15rem)] leading-[1.7] text-[#574048]">
+							Elite digital solutions for visionary brands. We blend high-fashion aesthetics with industrial-grade engineering to build your future.
+						</p>
+					</motion.div>
 				</div>
 			</section>
 
-			<section className="overflow-hidden bg-[#fff0f3] py-24">
-				<div className="px-[5vw] text-center">
+			<section 
+				className="bg-[#fff0f3] py-24 overflow-hidden relative"
+				onMouseEnter={() => setIsTechHovered(true)}
+				onMouseLeave={() => setIsTechHovered(false)}
+				onTouchStart={() => setIsTechHovered(true)}
+				onTouchEnd={() => setIsTechHovered(false)}
+			>
+				<div className="px-[5vw] text-center mb-12">
 					<p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8b7079]">Powered by Elite Technologies</p>
 				</div>
-				<div className="mt-12 flex items-center justify-between gap-16 overflow-x-auto px-[5vw] opacity-40 grayscale transition-all duration-700 hover:grayscale-0">
-					{["Node.js", "React", "Next.js", "Angular", "Spring Boot", "MySQL", "MongoDB"].map((item) => (
-						<span key={item} className="shrink-0 text-3xl font-bold tracking-tighter first:font-black last:font-black">
-							{item}
-						</span>
-					))}
+				<div className="flex h-20 items-center justify-center relative w-full pointer-events-auto">
+					<AnimatePresence mode="wait">
+						<motion.div
+							key={techIndex}
+							initial={{ opacity: 0, x: 40 }}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: -40 }}
+							transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+							className="absolute flex items-center justify-center w-full"
+						>
+							<span className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-[#25181d] opacity-40 hover:opacity-100 transition-opacity duration-500">
+								{technologies[techIndex]}
+							</span>
+						</motion.div>
+					</AnimatePresence>
 				</div>
 			</section>
 
 			<section className="bg-[#fff8f8] px-[5vw] py-32">
 				<div className="mb-24 grid grid-cols-1 items-end gap-16 lg:grid-cols-12">
 					<div className="lg:col-span-8">
-						<h2 className={`${playfair.className} mb-8 text-[clamp(2.6rem,5vw,4.8rem)] italic leading-tight text-[#25181d]`}>The RaRu Distinction</h2>
+						<h2 className={`${playfair.className} mb-8 text-[clamp(2.6rem,5vw,4.8rem)] italic leading-tight text-[#25181d]`}>The TK Distinction</h2>
 						<p className="max-w-3xl text-[clamp(1.05rem,1.5vw,1.2rem)] leading-[1.72] text-[#574048]">
 							We don't just build websites; we engineer digital equity. Our approach combines surgical precision with a global mindset.
 						</p>
 					</div>
 				</div>
-				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
-					{serviceCards.map((card) => (
-						<div key={card.title} className="rounded-[24px] bg-white p-10 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
-							<div className="mb-8 flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#fbe2e9] text-[#b10e6b]">
-								<MaterialIcon name={card.icon} filled />
+				<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+					{serviceCards.map((card, index) => (
+						<motion.div 
+							key={card.title}
+							initial={{ opacity: 0, y: 40 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, amount: 0.2 }}
+							transition={{ duration: 0.7, delay: index * 0.1, ease: [0.76, 0, 0.24, 1] }}
+							whileHover={{ y: -8, scale: 1.01 }}
+							className="group relative rounded-[32px] border border-transparent bg-white p-12 shadow-sm transition-all duration-500 hover:border-[#fbe2e9] hover:shadow-2xl hover:shadow-[#b10e6b]/5"
+						>
+							<div className="mb-8 flex items-center justify-between">
+								<div className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#fff0f3] text-[#b10e6b] transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#b10e6b] group-hover:text-white">
+									<MaterialIcon name={card.icon} filled />
+								</div>
+								<span className="text-sm font-black text-[#fbe2e9] transition-colors duration-500 group-hover:text-[#b10e6b]">{`0${index + 1}`}</span>
 							</div>
 							<h3 className="mb-4 text-2xl font-bold tracking-tight text-[#25181d]">{card.title}</h3>
 							<p className="leading-[1.7] text-[#574048]">{card.text}</p>
-						</div>
+						</motion.div>
 					))}
 				</div>
 			</section>

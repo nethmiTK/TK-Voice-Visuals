@@ -108,7 +108,7 @@ function RaRuNavbar() {
                           { href: "/Discover/RaRu", label: "Business Solutions", desc: "Digital solutions hub" },
                           // { href: "/Discover/ADcraft", label: "ADcraft", desc: "Campaign creative" },
                           // { href: "/Discover/Nexora", label: "Nexora", desc: "Automation systems" },
-                          { href: "/Discover/Voxium", label: "Voice Over", desc: "Voice-led experiences" },
+                          { href: "/Discover/MIC", label: "Voice Over", desc: "Voice-led experiences" },
                           { href: "/Discover/eyeCatching", label: "Video editing", desc: "Editorial visuals" },
                         ].map((item) => (
                           <Link
@@ -248,7 +248,7 @@ function RaRuNavbar() {
                     { href: "/Discover/RaRu", label: "SOFTWARE DEVELOPMENT" },
                     { href: "/Discover/ADcraft", label: "ADcraft" },
                     { href: "/Discover/Nexora", label: "Nexora" },
-                    { href: "/Discover/Voxium", label: "Voxium" },
+                    { href: "/Discover/MIC", label: "MIC" },
                     { href: "/Discover/eyeCatching", label: "eyeCatching" },
                   ].map((item) => (
                     <Link

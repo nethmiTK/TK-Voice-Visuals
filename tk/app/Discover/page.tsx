@@ -36,7 +36,7 @@ const hubs = [
     title: "VOICE OVER",
     description: "The sonics of authority.",
     items: ["Commercial Voice Over", "Documentary Narration", "News / Announcement Voice Over", "YouTube Series Voice Over"],
-    href: "/Discover/Voxium",
+    href: "/Discover/MIC",
   },
   {
     title: "VIDEO EDITING",
@@ -131,7 +131,7 @@ export default function DiscoverPage({ isEmbedded = false }: { isEmbedded?: bool
         );
       } else {
         // It's a plus sign
-        tl.fromTo(item, 
+        tl.fromTo(item as HTMLElement, 
           { opacity: 0, scale: 0 }, 
           { opacity: 1, scale: 1, duration: 0.5 }
         );
