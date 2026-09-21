@@ -70,7 +70,7 @@ function RaRuNavbar() {
     <>
       <nav
         onMouseLeave={() => setMenuOpen(false)}
-        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 border-y border-white/35 ${isTkRoute ? "bg-[#fff8f8]" : "bg-white/20"} px-5 py-4 text-[#25181d] shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl transition-all duration-300 left-0 right-0 w-full max-w-none`}
+        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 ${pathname === '/Discover/MIC' ? 'border-transparent shadow-none bg-transparent' : 'border-y border-white/35 shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl ' + (isTkRoute ? 'bg-[#fff8f8]' : 'bg-white/20')} px-5 py-4 text-[#25181d] transition-all duration-300 left-0 right-0 w-full max-w-none`}
       >
         <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw]">
           <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
