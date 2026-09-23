@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import FeaturedVoice from "./FeaturedVoice";
 import ScrollFillText from "../../components/ScrollFillText";
 
@@ -133,112 +133,131 @@ function WaveBars({ className = "" }: { className?: string }) {
   );
 }
 
-/* ─── HERO AUDIO CARD ─────────────────────────────────────────────── */
-const heroTracks = [
+ const heroTracks = [
   { label: "Track 01", src: "/audio/1.mp3" },
   { label: "Track 02", src: "/audio/2.mp3" },
   { label: "Track 03", src: "/audio/3.mp3" },
   { label: "Track 04", src: "/audio/4.mp3" },
 ];
 
+const WAVE_H = [6, 14, 8, 18, 10, 16, 5, 12, 18, 7, 14, 9, 16, 6, 11, 18, 8, 13, 6, 15];
+
 function HeroAudioCard({ inter, cormorant }: { inter: { className: string }; cormorant: { className: string } }) {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const handleTrack = (idx: number) => {
+  const loadAndPlay = (idx: number) => {
     if (!audioRef.current) return;
-    if (activeIdx === idx) {
-      if (playing) { audioRef.current.pause(); setPlaying(false); }
-      else { audioRef.current.play().catch(() => {}); setPlaying(true); }
-    } else {
-      audioRef.current.pause();
-      audioRef.current.src = heroTracks[idx].src;
-      audioRef.current.load();
-      audioRef.current.play().catch(() => {});
-      setActiveIdx(idx);
-      setPlaying(true);
-    }
+    audioRef.current.pause();
+    audioRef.current.src = heroTracks[idx].src;
+    audioRef.current.load();
+    audioRef.current.play().catch(() => { });
+    setActiveIdx(idx);
+    setPlaying(true);
+  };
+
+  const handlePlayPause = () => {
+    if (!audioRef.current) return;
+    if (playing) { audioRef.current.pause(); setPlaying(false); }
+    else { audioRef.current.play().catch(() => { }); setPlaying(true); }
+  };
+
+  const handlePrev = () => loadAndPlay((activeIdx - 1 + heroTracks.length) % heroTracks.length);
+  const handleNext = () => loadAndPlay((activeIdx + 1) % heroTracks.length);
+
+  /* 30-second auto-advance */
+  useEffect(() => {
+    if (!playing) return;
+    const t = setTimeout(() => {
+      handleNext();
+    }, 30000);
+    return () => clearTimeout(t);
+  }, [playing, activeIdx]);
+
+  const handleTimeUpdate = () => {
+    if (!audioRef.current) return;
+    const currentTime = audioRef.current.currentTime;
+    setProgress(Math.min(currentTime / 30, 1));
   };
 
   return (
     <div
       style={{
         position: "absolute",
-        left: "3%",
-        top: "55%",
-        width: "clamp(200px, 22vw, 310px)",
-        zIndex: 15,
-        borderRadius: "18px",
+        right: 0,
+        bottom: 0,
+        width: "55vw",
+        height: "80px",
+        zIndex: 25,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         overflow: "hidden",
-        background: "rgba(255,255,255,0.10)",
-        backdropFilter: "blur(18px)",
-        WebkitBackdropFilter: "blur(18px)",
-        border: "1px solid rgba(255,255,255,0.22)",
-        boxShadow: "0 12px 40px rgba(0,0,0,0.22)",
+        borderTopLeftRadius: "24px",
       }}
     >
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.8rem 1rem", borderBottom: "1px solid rgba(255,255,255,0.10)" }}>
-        <div style={{ position: "relative", width: 42, height: 42, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "2px solid rgba(153,14,83,0.65)", boxShadow: "0 0 10px rgba(153,14,83,0.3)" }}>
-          <Image src="/voxium/sample.png" alt="TK Voice" fill style={{ objectFit: "cover", objectPosition: "center top" }} />
-        </div>
-        <div>
-          <p className={inter.className} style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>TK Voice</p>
-          <p className={inter.className} style={{ fontSize: "9px", fontWeight: 500, color: "rgba(255,255,255,0.5)", marginTop: "2px", letterSpacing: "0.04em" }}>Professional Voice Over Artist</p>
-        </div>
+      {/* Background Image */}
+      <Image
+        src="/voxium/trackbg.jpg"
+        alt="Track Background"
+        fill
+        style={{ objectFit: "cover", opacity: 0.85 }}
+      />
+
+      {/* Progress Bar (Top edge) */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "rgba(255,255,255,0.1)" }}>
+        <div style={{ height: "100%", width: `${progress * 100}%`, background: "#FA0069", transition: "width 0.1s linear" }} />
       </div>
 
-      {/* Track list */}
-      <div style={{ padding: "0.4rem 0.5rem" }}>
-        {heroTracks.map((t, idx) => {
-          const isActive = activeIdx === idx;
-          const isPlaying = isActive && playing;
-          return (
-            <div
-              key={t.src}
-              onClick={() => handleTrack(idx)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                padding: "0.45rem 0.6rem",
-                borderRadius: "10px",
-                cursor: "pointer",
-                background: isActive ? "rgba(255,255,255,0.10)" : "transparent",
-                transition: "background 0.2s",
-              }}
-            >
-              {/* Play/Pause icon */}
-              <div style={{ width: 26, height: 26, borderRadius: "50%", background: isActive ? "#7E003F" : "rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "background 0.2s" }}>
-                {isPlaying ? (
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><rect x="5" y="4" width="4" height="16"/><rect x="15" y="4" width="4" height="16"/></svg>
-                ) : (
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-                )}
-              </div>
-              <span className={inter.className} style={{ fontSize: "11px", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,0.65)", flex: 1 }}>{t.label}</span>
-              {/* Animated bars when playing */}
-              {isPlaying && (
-                <div style={{ display: "flex", alignItems: "flex-end", gap: "2px", height: "14px" }}>
-                  {[1,2,3,4].map((b) => (
-                    <span key={b} style={{ display: "inline-block", width: "2px", borderRadius: "1px", background: "#7E003F", animation: `heroBar${b} ${0.5 + b * 0.1}s ease-in-out infinite alternate`, height: `${4 + b * 3}px` }} />
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
+      {/* Controls */}
+      <div style={{ position: "relative", zIndex: 10, display: "flex", alignItems: "center", gap: "2.5rem" }}>
+        {/* Prev */}
+        <button onClick={handlePrev} aria-label="Previous"
+          style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.7)", transition: "color 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.color = "#FA0069"; }}
+          onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" /></svg>
+        </button>
+
+        {/* Play / Pause */}
+        <button
+          onClick={handlePlayPause}
+          aria-label={playing ? "Pause" : "Play"}
+          style={{
+            width: 54, height: 54, borderRadius: "50%",
+            background: "#FA0069",
+            border: playing ? "2px solid rgba(255,255,255,0.85)" : "2px solid transparent",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+            boxShadow: playing
+              ? "0 0 20px rgba(250,0,105,0.8), 0 0 10px rgba(255,255,255,0.2)"
+              : "0 4px 12px rgba(250,0,105,0.4)",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+        >
+          {playing ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><rect x="5" y="4" width="4" height="16" /><rect x="15" y="4" width="4" height="16" /></svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
+          )}
+        </button>
+
+        {/* Next */}
+        <button onClick={handleNext} aria-label="Next"
+          style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.7)", transition: "color 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.color = "#FA0069"; }}
+          onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1z" /><path d="M16 6h2v12h-2z" /></svg>
+        </button>
       </div>
 
-      <audio ref={audioRef} onEnded={() => setPlaying(false)} />
-
-      <style>{`
-        @keyframes heroBar1 { from { height:4px } to { height:12px } }
-        @keyframes heroBar2 { from { height:7px } to { height:4px } }
-        @keyframes heroBar3 { from { height:10px } to { height:6px } }
-        @keyframes heroBar4 { from { height:5px } to { height:13px } }
-      `}</style>
+      <audio ref={audioRef} preload="none" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} />
     </div>
   );
 }
@@ -249,359 +268,1808 @@ function VoxiumHero() {
     <section
       aria-label="MIC Hero"
       style={{
-        minHeight: "100svh",
-        height: "100vh",
-        width: "100%",
-        overflow: "hidden",
         position: "relative",
+        width: "100%",
+        height: "100svh",
+        minHeight: "600px",
+        overflow: "hidden",
+        background: "#170b10",
       }}
     >
-      {/* LEFT BACKGROUND — solid hot pink */}
-      <div
-        aria-hidden="true"
+      {/* =====================================================
+          HERO BACKGROUND
+      ===================================================== */}
+
+      <Image
+        src="/voxium/herobg.png"
+        alt="MIC — Voice Over"
+        fill
+        priority
+        sizes="100vw"
         style={{
-          position: "absolute",
-          inset: 0,
-          background: "#FF3398",
-          zIndex: 0,
-          clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+          objectFit: "cover",
+          objectPosition: "center center",
         }}
       />
 
-      {/* RIGHT BACKGROUND gradient */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(180deg, #4a0b2e 0%, #2a0b1a 52%, #1a0610 100%)",
-          zIndex: 0,
-          clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-        }}
-      >
-        <Image
-          src="/voxium/herobg.avif"
-          alt=""
-          fill
-          priority
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-            opacity: 0.7,
-            mixBlendMode: "overlay",
-            WebkitMaskImage: "radial-gradient(ellipse at center, black 10%, transparent 70%)",
-            maskImage: "radial-gradient(ellipse at center, black 10%, transparent 70%)",
-          }}
-        />
+      {/* =====================================================
+          VOICE OVER LABEL
+      ===================================================== */}
+
+      <div className="waveform-label">
+        <span>Sri Lankan</span>
+        <span>Research Voice visuals Artist</span>
       </div>
 
-      {/* Vignette overlay (right side) */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(ellipse 82% 78% at 50% 50%, transparent 38%, rgba(14,5,11,0.78) 100%)",
-          zIndex: 2,
-          pointerEvents: "none",
-          clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-        }}
-      />
+      {/* =====================================================
+          ROSE AUDIO WAVEFORM
+      ===================================================== */}
 
-      {/* ── LEFT SIDE "MIC" TEXT ── */}
-      <div
-        style={{
-          position: "absolute",
-          left: "15%",
-          top: "30%",
-          transform: "translateY(-50%)",
-          zIndex: 10,
-          pointerEvents: "none",
-        }}
-      >
-        <span
-          className={cormorant.className}
-          style={{
-            fontSize: "clamp(10rem, 22vw, 28rem)",
-            fontWeight: 600,
-            color: "#7E003F",
-            display: "block",
-            lineHeight: 1,
-          }}
+      <div className="hero-waveform" aria-hidden="true">
+        {[
+          8,
+          12,
+          10,
+          16,
+          13,
+          22,
+          14,
+          30,
+          18,
+          12,
+          26,
+          35,
+          17,
+          42,
+          24,
+          14,
+          31,
+          20,
+          48,
+          28,
+          18,
+          36,
+          22,
+          52,
+          30,
+          19,
+          43,
+          27,
+          38,
+          20,
+          31,
+          16,
+          26,
+          12,
+          19,
+          10,
+        ].map((height, index) => (
+          <span
+            key={index}
+            className="wave-bar"
+            style={{
+              height: `${height}px`,
+              animationDelay: `${index * 0.045}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* =====================================================
+          ROSE MOVING SVG PULSE LINES
+          
+          NOTE:
+          Static/base lines are HIDDEN.
+          Only the moving bright rose lights are visible.
+      ===================================================== */}
+
+      <div className="hero-pulse-lines" aria-hidden="true">
+        <svg
+          viewBox="0 0 858 434"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          MIC
-        </span>
+          {/* =================================================
+              MOVING ROSE LIGHTS ONLY
+          ================================================= */}
+
+          <path
+            d="M269 220.5H16.5C10.9772 220.5 6.5 224.977 6.5 230.5V398.5"
+            className="pulse-beam beam-1"
+          />
+
+          <path
+            d="M568 200H841C846.523 200 851 195.523 851 190V40"
+            className="pulse-beam beam-2"
+          />
+
+          <path
+            d="M425.5 274V333C425.5 338.523 421.023 343 415.5 343H152C146.477 343 142 347.477 142 353V426.5"
+            className="pulse-beam beam-3"
+          />
+
+          <path
+            d="M493 274V333.226C493 338.749 497.477 343.226 503 343.226H760C765.523 343.226 770 347.703 770 353.226V427"
+            className="pulse-beam beam-4"
+          />
+
+          <path
+            d="M380 168V17C380 11.4772 384.477 7 390 7H414"
+            className="pulse-beam beam-5"
+          />
+        </svg>
       </div>
 
-      {/* ── PROFILE CARD — bottom-left with audio player ── */}
-      <HeroAudioCard inter={inter} cormorant={cormorant} />
+      {/* =====================================================
+          SOCIAL ICONS
+      ===================================================== */}
 
-      {/* ── SIDE IMAGE — RIGHT ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          right: 0,
-          top: "10vh",
-          width: "clamp(160px, 28vw, 420px)",
-          height: "90%",
-          zIndex: 4,
-          WebkitMaskImage: "radial-gradient(ellipse at 100% 50%, black 0%, transparent 60%)",
-          maskImage: "radial-gradient(ellipse at 100% 50%, black 0%, transparent 60%)",
-        }}
-      >
-        <Image
-          src="/voxium/heroleft.png"
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 28vw"
-          style={{
-            objectFit: "cover",
-            objectPosition: "center top",
-            transform: "scaleX(-1)",
-          }}
-        />
-      </div>
+      <div className="hero-socials">
 
-      {/* ── CENTER HERO IMAGE ── */}
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "20vh",
-          height: "80%",
-          width: "clamp(240px, 44vw, 640px)",
-          transform: "translateX(-50%)",
-          zIndex: 8,
-        }}
-      >
-        <Image
-          src="/voxium/hero.png"
-          alt="MIC — Voice Over"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 52vw"
-          style={{
-            objectFit: "cover",
-            objectPosition: "center top",
-          }}
-        />
-      </div>
+        {/* WhatsApp */}
+        <Link
+          href="https://wa.me/94777858521"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          className="social-icon"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path d="M21 11.5a8.5 8.5 0 0 1-12.8 7.35L3 20l1.15-5.05A8.5 8.5 0 1 1 21 11.5Z" />
 
-      {/* ── SOCIAL ICONS — RIGHT ── */}
-      <div
-        style={{
-          position: "absolute",
-          right: "clamp(1.2rem, 2.5vw, 2rem)",
-          top: "40%",
-          transform: "translateY(-50%)",
-          zIndex: 20,
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.2rem",
-        }}
-      >
-        <Link href="https://wa.me/94777858521" target="_blank" rel="noopener noreferrer">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(245,232,224,0.65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.2s" }} onMouseEnter={e => (e.currentTarget.style.stroke = "white")} onMouseLeave={e => (e.currentTarget.style.stroke = "rgba(245,232,224,0.65)")}>
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            <path d="M8.5 8.5c.3-.7.6-.7.9-.7h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.6.7c-.1.2-.1.3 0 .5.3.6 1.2 1.5 2.4 2 .2.1.4.1.5-.1l.7-.8c.1-.2.3-.2.5-.1l1.7.8c.2.1.3.3.2.5-.2.8-.9 1.4-1.7 1.5-1.2.1-2.7-.5-4.1-1.7-1.2-1-2.1-2.2-2.4-3.2-.2-.7-.1-1.5.3-2.1Z" />
           </svg>
         </Link>
-        <Link href="https://web.facebook.com/profile.php?id=61585810421141" target="_blank" rel="noopener noreferrer">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(245,232,224,0.65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.2s" }} onMouseEnter={e => (e.currentTarget.style.stroke = "white")} onMouseLeave={e => (e.currentTarget.style.stroke = "rgba(245,232,224,0.65)")}>
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+
+        {/* Facebook */}
+        <Link
+          href="https://web.facebook.com/profile.php?id=61585810421141"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          className="social-icon"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.6.4-1 1-1Z" />
           </svg>
         </Link>
-        <Link href="https://www.linkedin.com/in/nethmi-thalikoralage-5265032a0/" target="_blank" rel="noopener noreferrer">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(245,232,224,0.65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.2s" }} onMouseEnter={e => (e.currentTarget.style.stroke = "white")} onMouseLeave={e => (e.currentTarget.style.stroke = "rgba(245,232,224,0.65)")}>
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+
+        {/* LinkedIn */}
+        <Link
+          href="https://www.linkedin.com/in/nethmi-thalikoralage-5265032a0/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="social-icon"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <rect
+              x="4"
+              y="4"
+              width="16"
+              height="16"
+              rx="2"
+            />
+
+            <path d="M8 10v6" />
+
+            <path d="M8 7.5v.01" />
+
+            <path d="M12 16v-3.2a2.3 2.3 0 0 1 4.6 0V16" />
+
+            <path d="M12 10v6" />
           </svg>
         </Link>
+
       </div>
 
-      {/* ── SCROLL INDICATOR ── */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 20,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.5rem",
-          pointerEvents: "none",
-        }}
-      >
-        <div
-          style={{
-            width: "1px",
-            height: "38px",
-            background: "linear-gradient(to bottom, rgba(210,165,175,0.45), transparent)",
-          }}
-        />
-      </div>
+      {/* =====================================================
+          STYLES
+      ===================================================== */}
+
+      <style jsx>{`
+
+        /* =====================================================
+           VOICE OVER LABEL
+        ===================================================== */
+
+        .waveform-label {
+          position: absolute;
+          left: 10%;
+          top: calc(50% - 48px);
+
+          z-index: 12;
+
+          display: flex;
+          align-items: center;
+
+          gap: 6px;
+
+          font-family: Arial, sans-serif;
+
+          font-size: 10px;
+          font-weight: 500;
+
+          letter-spacing: 1.4px;
+
+          text-transform: uppercase;
+
+          white-space: nowrap;
+
+          pointer-events: none;
+          user-select: none;
+        }
+
+        .waveform-label span:first-child {
+          color: rgba(255, 255, 255, 0.9);
+
+          text-shadow:
+            0 0 8px rgba(255, 255, 255, 0.12);
+        }
+
+        .waveform-label span:last-child {
+          color: rgba(255, 220, 130, 0.95);
+
+          font-size: 17px;
+          font-weight: 400;
+
+          line-height: 2.5px;
+
+          letter-spacing: 1px;
+
+          transform: scaleY(0.75);
+          transform-origin: left center;
+
+          text-shadow: none;
+        }
+
+
+        /* =====================================================
+           ROSE AUDIO WAVEFORM
+        ===================================================== */
+
+        .hero-waveform {
+          position: absolute;
+
+          left: 10%;
+          top: 50%;
+
+          transform: translateY(-50%);
+
+          z-index: 11;
+
+          width: 420px;
+          height: 55px;
+
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-start;
+
+          gap: 4px;
+
+          pointer-events: none;
+        }
+
+        .wave-bar {
+          width: 4px;
+
+          min-height: 5px;
+
+          display: block;
+
+          border-radius: 999px;
+
+          background: linear-gradient(
+            to top,
+            #c92f52,
+            #f04d70
+          );
+
+          box-shadow:
+            0 0 7px rgba(240, 77, 112, 0.45),
+            0 0 14px rgba(240, 77, 112, 0.18);
+
+          transform-origin: bottom;
+
+          animation:
+            audioWave 0.75s ease-in-out infinite alternate;
+        }
+
+        @keyframes audioWave {
+
+          0% {
+            transform: scaleY(0.55);
+            opacity: 0.55;
+          }
+
+          100% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+
+        }
+
+
+        /* =====================================================
+           ROSE MOVING SVG PULSE LINES
+
+           IMPORTANT:
+           NO STATIC LINE.
+           ONLY BRIGHT MOVING SEGMENT.
+        ===================================================== */
+
+        .hero-pulse-lines {
+          position: absolute;
+
+          inset: 0;
+
+          width: 100%;
+          height: 100%;
+
+          z-index: 9;
+
+          pointer-events: none;
+
+          overflow: hidden;
+        }
+
+        .hero-pulse-lines svg {
+          position: absolute;
+
+          inset: 0;
+
+          width: 100%;
+          height: 100%;
+
+          overflow: visible;
+        }
+
+        /* =====================================================
+           MOVING ROSE LIGHT
+        ===================================================== */
+
+        .pulse-beam {
+          fill: none;
+
+          stroke: #f04d70;
+
+          stroke-width: 2.5;
+
+          stroke-linecap: round;
+          stroke-linejoin: round;
+
+          /*
+            ONLY SMALL BRIGHT SEGMENT
+            is visible and travels
+          */
+
+          stroke-dasharray: 75 900;
+
+          stroke-dashoffset: 900;
+
+          filter:
+            drop-shadow(
+              0 0 4px rgba(240, 77, 112, 0.95)
+            )
+            drop-shadow(
+              0 0 10px rgba(240, 77, 112, 0.65)
+            )
+            drop-shadow(
+              0 0 20px rgba(240, 77, 112, 0.35)
+            );
+
+          animation:
+            rosePulseTravel 4s linear infinite;
+        }
+
+        .beam-1 {
+          animation-delay: 0s;
+        }
+
+        .beam-2 {
+          animation-delay: 0.8s;
+        }
+
+        .beam-3 {
+          animation-delay: 1.6s;
+        }
+
+        .beam-4 {
+          animation-delay: 2.4s;
+        }
+
+        .beam-5 {
+          animation-delay: 3.2s;
+        }
+
+        @keyframes rosePulseTravel {
+
+          0% {
+            stroke-dashoffset: 900;
+            opacity: 0;
+          }
+
+          8% {
+            opacity: 1;
+          }
+
+          45% {
+            opacity: 1;
+          }
+
+          75% {
+            opacity: 0.8;
+          }
+
+          100% {
+            stroke-dashoffset: -900;
+            opacity: 0;
+          }
+
+        }
+
+
+        /* =====================================================
+           SOCIAL ICONS
+        ===================================================== */
+
+        .hero-socials {
+          position: fixed;
+
+          right: clamp(1.2rem, 2.5vw, 2rem);
+
+          top: 50%;
+
+          transform: translateY(-50%);
+
+          z-index: 9999;
+
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 1.2rem;
+        }
+
+        .social-icon {
+          width: 42px;
+          height: 42px;
+
+          display: flex;
+
+          align-items: center;
+          justify-content: center;
+
+          color: rgba(245, 232, 224, 0.75);
+
+          transition:
+            color 0.3s ease,
+            transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+          color: #ffffff;
+
+          transform: scale(1.1);
+        }
+
+
+        /* =====================================================
+           TABLET / MOBILE
+        ===================================================== */
+
+        @media (max-width: 768px) {
+
+          section {
+            height: 62svh !important;
+
+            min-height: 420px !important;
+
+            max-height: 650px;
+          }
+
+          section :global(img) {
+            object-fit: cover !important;
+
+            object-position: 66% center !important;
+          }
+
+
+          /* MOBILE LABEL */
+
+          .waveform-label {
+            left: 10%;
+
+            top: calc(50% - 42px);
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+
+            gap: 4px;
+          }
+
+          .waveform-label span:last-child {
+            font-size: 6px;
+
+            line-height: 2.5px;
+
+            letter-spacing: 0.8px;
+          }
+
+
+          /* MOBILE WAVEFORM */
+
+          .hero-waveform {
+            left: 10%;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 250px;
+
+            height: 45px;
+
+            gap: 3px;
+          }
+
+          .wave-bar {
+            width: 3px;
+          }
+
+
+          /* MOBILE PULSE LINES */
+
+          .hero-pulse-lines {
+            width: 125%;
+
+            left: -12.5%;
+
+            height: 100%;
+          }
+
+          .pulse-beam {
+            stroke-width: 2;
+          }
+
+
+          /* MOBILE SOCIAL */
+
+          .hero-socials {
+            position: fixed;
+
+            right: 0.65rem;
+            left: auto;
+
+            top: 50%;
+            bottom: auto;
+
+            transform: translateY(-50%);
+
+            flex-direction: column;
+
+            gap: 0.7rem;
+
+            padding: 0;
+
+            background: transparent;
+
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+          }
+
+          .social-icon {
+            width: 38px;
+            height: 38px;
+
+            color: rgba(245, 232, 224, 0.85);
+          }
+
+          .social-icon svg {
+            width: 21px;
+            height: 21px;
+          }
+
+        }
+
+
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+          section {
+            height: 58svh !important;
+
+            min-height: 380px !important;
+          }
+
+          section :global(img) {
+            object-position: 68% center !important;
+          }
+
+
+          /* SMALL LABEL */
+
+          .waveform-label {
+            left: 10%;
+
+            top: calc(50% - 38px);
+
+            font-size: 7px;
+
+            letter-spacing: 0.8px;
+
+            gap: 3px;
+          }
+
+          .waveform-label span:last-child {
+            font-size: 5.5px;
+
+            line-height: 2.5px;
+
+            letter-spacing: 0.7px;
+          }
+
+
+          /* SMALL WAVEFORM */
+
+          .hero-waveform {
+            left: 10%;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 220px;
+
+            height: 40px;
+
+            gap: 2.5px;
+          }
+
+          .wave-bar {
+            width: 2.5px;
+          }
+
+
+          /* SMALL PULSE LINES */
+
+          .hero-pulse-lines {
+            width: 145%;
+
+            left: -22.5%;
+
+            height: 100%;
+          }
+
+          .pulse-beam {
+            stroke-width: 1.8;
+          }
+
+
+          /* SMALL SOCIAL */
+
+          .hero-socials {
+            right: 0.45rem;
+
+            gap: 0.45rem;
+          }
+
+          .social-icon {
+            width: 34px;
+            height: 34px;
+          }
+
+          .social-icon svg {
+            width: 19px;
+            height: 19px;
+          }
+
+        }
+
+      `}
+      </style>
     </section>
   );
 }
-
 export default function VoxiumPage() {
   return (
     <main className={`${inter.className} bg-[#fff8f8] text-[#25181d]`}>
       <VoxiumHero />
 
-      <section className="relative mx-auto max-w-7xl px-[5vw] py-28 bg-[#990E53] rounded-[28px] overflow-hidden mt-12 mb-12">
-        {/* Background Image with Fallback Color */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/voxium/arcbg.jpg"
-            alt="Sonic Architecture Background"
-            fill
-            style={{ objectFit: "cover", objectPosition: "center", opacity: 0.3 }}
-          />
-        </div>
+      {/* ── AUDIO SHOWCASE SECTION ── */}
+<section
+  id="pj8izd"
+  style={{
+    position: "relative",
+    width: "100%",
+    minHeight: "60vh",
+    overflow: "visible",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingBottom: "6rem",
+  }}
+>
+  {/* MAIN BACKGROUND — 2se.jpg */}
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      overflow: "hidden",
+      zIndex: 0,
+    }}
+  >
+    <Image
+      src="/voxium/2se.jpg"
+      alt=""
+      fill
+      style={{
+        objectFit: "cover",
+        objectPosition: "center",
+      }}
+    />
+  </div>
 
-        <div className="relative z-10 mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div className="max-w-3xl">
-            <ScrollFillText as="h2" className="text-4xl font-bold tracking-tight text-white md:text-6xl">
-              Sonic Architecture
-            </ScrollFillText>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-white/90 md:text-lg">
-              From the first syllable to the final mix, the interface presents a
-              full premium audio service page without using photographs.
-            </p>
-          </div>
-          <Link href="#portfolio" className="border-b-2 border-white/60 pb-1 text-sm font-bold uppercase tracking-[0.25em] text-white hover:border-white">
-            View Portfolio
-          </Link>
-        </div>
-      </section>
+  {/* LEFT SIDE EXTRA IMAGE */}
+  <div
+    style={{
+      position: "absolute",
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: "40%",
+      zIndex: 5,
+      overflow: "hidden",
+      pointerEvents: "none",
 
-      <div id="portfolio" className="mx-auto max-w-7xl px-[5vw] grid grid-cols-1 gap-8 md:grid-cols-12 mb-28">
-        {services.map((service, index) => {
-          const cardTone =
-            service.tone === "strong"
-              ? "bg-[#a90b66] text-white shadow-[0_20px_60px_rgba(169,11,102,0.2)]"
-              : service.tone === "wide"
-                ? "bg-[#ffe8ee] text-[#25181d]"
-                : "bg-white text-[#25181d]";
+      maskImage:
+        "linear-gradient(to right, black 0%, black 45%, transparent 100%)",
+      WebkitMaskImage:
+        "linear-gradient(to right, black 0%, black 45%, transparent 100%)",
+    }}
+  >
+    <Image
+      src="/voxium/left.jpg"
+      alt=""
+      fill
+      style={{
+        objectFit: "cover",
+        objectPosition: "center",
+      }}
+    />
+  </div>
 
-          const sizeClass =
-            index === 0
-              ? "md:col-span-8 md:min-h-[420px]"
-              : index === 1
-                ? "md:col-span-4 md:min-h-[420px]"
-                : index === 2
-                  ? "md:col-span-4 md:min-h-[270px]"
-                  : "md:col-span-8 md:min-h-[270px]";
+  {/* VISUAL THINK TO */}
+  <div
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      transform: "translateY(-50%)",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingInline: "3rem",
+      pointerEvents: "none",
+      zIndex: 30,
+    }}
+  >
+    <span
+      className={cormorant.className}
+      style={{
+        fontSize: "clamp(4rem, 11vw, 14rem)",
+        fontWeight: 700,
+        fontStyle: "italic",
+        color: "rgba(255, 220, 235, 0.35)",
+        letterSpacing: "0.05em",
+        lineHeight: 1,
+        textTransform: "uppercase",
+        whiteSpace: "nowrap",
+      }}
+    >
+      VISUAL THINK TO
+    </span>
 
-          return (
-            <article
-              key={service.title}
-              className={`relative overflow-hidden rounded-[28px] p-8 ${cardTone} ${sizeClass}`}
-            >
-              {index === 0 ? (
-                <div className="absolute inset-y-0 right-0 hidden w-[42%] bg-[radial-gradient(circle_at_30%_30%,rgba(177,14,107,0.2),transparent_30%),linear-gradient(145deg,rgba(255,255,255,0.22),rgba(0,0,0,0.08))] md:block" />
-              ) : null}
+    <span
+      className={cormorant.className}
+      style={{
+        fontSize: "clamp(4rem, 11vw, 14rem)",
+        fontWeight: 700,
+        fontStyle: "italic",
+        color: "rgba(255, 220, 235, 0.35)",
+        letterSpacing: "0.05em",
+        lineHeight: 1,
+        textTransform: "uppercase",
+        whiteSpace: "nowrap",
+      }}
+    />
+  </div>
 
-              <div className="relative z-10 flex h-full flex-col justify-between gap-10">
-                <div>
-                  <div className="mb-6 text-4xl text-[#a90b66]">
-                    {index === 0 ? "◌" : index === 1 ? "◉" : index === 2 ? "◎" : "◍"}
-                  </div>
-                  <h3 className={`max-w-md text-2xl font-bold md:text-3xl ${index === 1 ? "text-white" : ""}`}>
-                    {service.title}
-                  </h3>
-                  <p className={`mt-4 max-w-md text-sm leading-7 ${index === 1 ? "text-white/82" : "text-[#574048]"}`}>
-                    {service.description}
-                  </p>
-                </div>
+  {/* FeaturedVoice */}
+  <div
+    style={{
+      position: "relative",
+      zIndex: 10,
+      width: "100%",
+    }}
+  >
+    <FeaturedVoice />
+  </div>
+</section>
+ 
+ {/* ================= ABOUT SECTION ================= */}
+<section className="relative min-h-screen w-full overflow-hidden bg-[#AD0E48] text-white">
 
-                <div className="flex flex-wrap gap-3">
-                  {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] ${index === 1 ? "bg-white/12 text-white" : "bg-[#fff4f7] text-[#a90b66]"}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          );
-        })}
+  {/* LEFT SMALL VERTICAL LABEL */}
+  <div className="absolute left-6 top-1/2 z-20 hidden -translate-y-1/2 md:block">
+    <div className="flex items-center gap-3 [writing-mode:vertical-rl] rotate-180">
+      <span className="text-[10px] uppercase tracking-[0.35em] opacity-70">
+        Beyond the ordinary
+      </span>
+
+      <span className="h-20 w-[1px] bg-white/50" />
+
+      <span className="text-[11px] font-medium uppercase tracking-[0.3em]">
+        2026
+      </span>
+    </div>
+  </div>
+
+
+  {/* HUGE ABOUT — BOTTOM LEFT */}
+{/* VERTICAL ABOUT LETTERS */}
+<div
+  className="
+    pointer-events-none
+    absolute
+    bottom-[-2vw]
+    left-[8%]
+    z-10
+    flex
+    flex-col
+    select-none
+    font-black
+    uppercase
+    text-transparent
+    leading-[0.62]
+    tracking-[-0.06em]
+    [-webkit-text-stroke:1px_rgba(255,255,255,0.9)]
+    text-[13vw]
+    md:text-[11vw]
+    lg:text-[9vw]
+  "
+>
+  <span>A</span>
+  <span>B</span>
+  <span>O</span>
+  <span>U</span>
+  <span>T</span>
+</div>
+
+  {/* MAIN CONTENT */}
+  <div className="relative z-20 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 py-24 md:px-12 lg:px-20">
+
+    <div className="ml-auto w-full max-w-[650px]">
+
+      {/* TOP SMALL TEXT */}
+      <div className="mb-8 flex items-center gap-4">
+        <span className="h-px w-12 bg-white/70" />
+
+        <span className="text-[10px] uppercase tracking-[0.35em] text-white/80">
+          About
+        </span>
       </div>
 
-      <FeaturedVoice />
 
-      <section className="px-[5vw] py-28">
-        <div className="mx-auto max-w-7xl">
-          <ScrollFillText as="h2" className="text-center text-4xl font-bold md:text-5xl">
-            The Voxium Method
-          </ScrollFillText>
-          <div className="mt-20 grid gap-10 md:grid-cols-4">
-            {methods.map((method) => (
-              <article key={method.step} className="relative">
-                <div className="absolute -top-10 left-0 text-8xl font-black text-[#a90b66]/5">{method.step}</div>
-                <h3 className="relative mb-4 text-xl font-bold">{method.title}</h3>
-                <p className="relative text-sm leading-7 text-[#574048]">{method.text}</p>
-              </article>
-            ))}
+      {/* RIGHT SIDE CONTENT BOX */}
+      <div className="border border-white/45 p-7 md:p-10 lg:p-12">
+
+        {/* HEADING */}
+        <h2 className="mb-6 text-4xl font-light uppercase tracking-[-0.03em] md:text-5xl lg:text-6xl">
+          Hall
+        </h2>
+
+        {/* DESCRIPTION */}
+        <p className="max-w-xl text-sm leading-7 text-white/80 md:text-base md:leading-8">
+          A space created to bring together ideas, memories and
+          stories through a carefully crafted visual experience.
+          Every detail is designed with simplicity, emotion and
+          intention.
+        </p>
+
+
+        {/* DIVIDER */}
+        <div className="my-8 h-px w-full bg-white/20" />
+
+
+        {/* SMALL INFORMATION */}
+        <div className="grid grid-cols-2 gap-8">
+
+          <div>
+            <p className="mb-2 text-[9px] uppercase tracking-[0.3em] text-white/50">
+              Focus
+            </p>
+
+            <p className="text-sm uppercase tracking-[0.12em]">
+              Creative
+            </p>
           </div>
+
+
+          <div>
+            <p className="mb-2 text-[9px] uppercase tracking-[0.3em] text-white/50">
+              Experience
+            </p>
+
+            <p className="text-sm uppercase tracking-[0.12em]">
+              Visual Stories
+            </p>
+          </div>
+
         </div>
-      </section>
 
-      <section id="pricing" className="bg-[#ffeff3] px-[5vw] py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center">
-            <ScrollFillText as="h2" className="text-4xl font-bold md:text-5xl">
-              Pricing Models
-            </ScrollFillText>
-            <p className="mt-4 text-[#574048]">Scalable solutions for voices that demand to be heard.</p>
-          </div>
+      </div>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {pricing.map((plan) => (
-              <article
-                key={plan.name}
-                className={`flex h-full flex-col rounded-[28px] p-8 shadow-sm ${plan.featured ? "bg-[#26181f] text-white shadow-[0_24px_60px_rgba(38,24,31,0.24)] md:-translate-y-6" : "bg-white text-[#25181d]"}`}
-              >
-                {plan.featured ? (
-                  <span className="mb-4 inline-flex w-fit rounded bg-[#a90b66] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-white">
-                    Popular Choice
-                  </span>
-                ) : null}
-                <div className="mb-8">
-                  <h3 className={`mb-4 text-lg font-bold uppercase tracking-[0.22em] ${plan.featured ? "text-[#ffb0cd]" : "text-[#a90b66]"}`}>
-                    {plan.name}
-                  </h3>
-                  <div className="text-5xl font-black">{plan.price}</div>
-                  <p className={`mt-2 text-xs italic ${plan.featured ? "text-white/45" : "text-[#574048]"}`}>{plan.note}</p>
-                </div>
 
-                <ul className="mb-10 flex-1 space-y-4 text-sm">
-                  {plan.items.map((item, index) => (
-                    <li key={item} className="flex items-center gap-3 font-medium">
-                      <span className={plan.featured ? "text-[#ffb0cd]" : "text-[#a90b66]"}>{index === 3 && plan.name === "Essential" ? "◦" : "✓"}</span>
-                      <span className={plan.featured ? "text-white/88" : "text-[#25181d]"}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+      {/* BOTTOM SMALL TEXT */}
+      <div className="mt-6 flex items-center justify-between text-[9px] uppercase tracking-[0.3em] text-white/50">
+        <span>Est. 2026</span>
+        <span>Scroll to explore</span>
+      </div>
 
-                <Link
-                  href="/Consultancy"
-                  className={`rounded-full px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] transition-transform hover:scale-[1.01] ${plan.featured ? "bg-[#a90b66] text-white" : "border border-[#a90b66] text-[#a90b66]"}`}
-                >
-                  {plan.cta}
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+    </div>
+
+  </div>
+
+
+  {/* RIGHT EDGE VERTICAL TEXT */}
+  <div className="absolute right-5 top-1/2 z-20 hidden -translate-y-1/2 md:block">
+    <span className="[writing-mode:vertical-rl] text-[9px] uppercase tracking-[0.4em] text-white/50">
+      Creative Space — About
+    </span>
+  </div>
+
+</section>
+{/* =============== END ABOUT SECTION =============== */}
+  {/*  CINEMATIC VIDEO / IS THAT JOKE */}
+<section
+  style={{
+    position: "relative",
+    width: "100%",
+    minHeight: "100svh",
+    background: "#62001D",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  {/* MAIN VIDEO */}
+  <video
+    src="/voxium/video.mp4"
+    autoPlay
+    muted
+    playsInline
+    loop={false}
+    preload="auto"
+    style={{
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+
+      width: "min(760px, 52vw)",
+      height: "min(520px, 62vh)",
+
+      objectFit: "cover",
+
+      borderRadius: "4px",
+
+      zIndex: 5,
+
+      boxShadow:
+        "0 30px 100px rgba(0,0,0,0.35)",
+    }}
+  />
+
+  {/* LEFT TEXT */}
+  <div
+    className="cinematic-side-text cinematic-left-text"
+    style={{
+      position: "absolute",
+      left: "7vw",
+      top: "50%",
+      transform: "translateY(-50%)",
+
+      zIndex: 8,
+
+      color: "rgba(255,255,255,0.92)",
+
+      fontSize: "clamp(2rem, 4vw, 5rem)",
+
+      fontFamily: cormorant.style.fontFamily,
+
+      fontStyle: "italic",
+
+      lineHeight: 0.9,
+
+      letterSpacing: "-0.03em",
+    }}
+  >
+    VOICE
+    <br />
+    <span style={{ opacity: 0.55 }}>and</span>
+    <br />
+    VISUAL
+  </div>
+
+
+  {/* RIGHT TEXT */}
+  <div
+    className="cinematic-side-text cinematic-right-text"
+    style={{
+      position: "absolute",
+      right: "7vw",
+      top: "50%",
+      transform: "translateY(-50%)",
+
+      zIndex: 8,
+
+      color: "rgba(255,255,255,0.92)",
+
+      fontSize: "clamp(2rem, 4vw, 5rem)",
+
+      fontFamily: cormorant.style.fontFamily,
+
+      fontStyle: "italic",
+
+      lineHeight: 0.9,
+
+      letterSpacing: "-0.03em",
+
+      textAlign: "right",
+    }}
+  >
+    SOUND
+    <br />
+    <span style={{ opacity: 0.55 }}>becomes</span>
+    <br />
+    STORY
+  </div>
+
+
+  {/* IS THAT JOKE */}
+  <div
+    className="is-that-joke"
+    style={{
+      position: "absolute",
+
+      left: "50%",
+      top: "50%",
+
+      transform: "translate(-50%, -50%)",
+
+      zIndex: 15,
+
+      opacity: 0,
+
+      pointerEvents: "none",
+
+      whiteSpace: "nowrap",
+
+      fontFamily: cormorant.style.fontFamily,
+
+      fontSize: "clamp(3rem, 8vw, 10rem)",
+
+      fontStyle: "italic",
+
+      fontWeight: 400,
+
+      letterSpacing: "-0.04em",
+
+      color: "#fff",
+    }}
+  >
+    IS THAT JOKE
+  </div>
+
+
+  {/* SMALL CIRCLE VIDEO — V2 */}
+  <div
+    className="v2-circle-video"
+    style={{
+      position: "absolute",
+
+      left: "50%",
+      top: "50%",
+
+      transform: "translate(-50%, -50%) scale(0.1)",
+
+      width: "190px",
+      height: "190px",
+
+      borderRadius: "50%",
+
+      overflow: "hidden",
+
+      zIndex: 20,
+
+      opacity: 0,
+
+      pointerEvents: "none",
+
+      border: "1px solid rgba(255,255,255,0.25)",
+
+      boxShadow:
+        "0 20px 80px rgba(0,0,0,0.4)",
+    }}
+  >
+    <video
+      src="/voxium/V2.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+      }}
+    />
+  </div>
+
+
+  {/* CINEMATIC NUMBER */}
+  <div
+    style={{
+      position: "absolute",
+
+      left: "5vw",
+      bottom: "4rem",
+
+      zIndex: 10,
+
+      color: "rgba(255,255,255,0.3)",
+
+      fontSize: "9px",
+
+      letterSpacing: "0.35em",
+
+      textTransform: "uppercase",
+    }}
+  >
+    01 / VOICE & VISUALS
+  </div>
+
+
+  {/* =====================================================
+      ANIMATION
+  ===================================================== */}
+  <style jsx>{`
+
+    .cinematic-side-text {
+      animation: sideTextFade 10s ease forwards;
+    }
+
+    @keyframes sideTextFade {
+      0% {
+        opacity: 1;
+      }
+
+      75% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+
+    /*
+      Video stays visible for the opening 30 sec.
+      Then fades away.
+    */
+    section:hover .cinematic-side-text {
+      animation-play-state: running;
+    }
+
+
+    .is-that-joke {
+      animation: jokeReveal 30s linear forwards;
+    }
+
+    @keyframes jokeReveal {
+
+      0% {
+        opacity: 0;
+        transform: translate(-90vw, -50%) scale(0.8);
+      }
+
+      78% {
+        opacity: 0;
+        transform: translate(-90vw, -50%) scale(0.8);
+      }
+
+      84% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      96% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+
+
+    .v2-circle-video {
+      animation: v2Reveal 30s linear forwards;
+    }
+
+    @keyframes v2Reveal {
+
+      0% {
+        opacity: 0;
+        transform:
+          translate(-50%, -50%)
+          scale(0.1);
+      }
+
+      78% {
+        opacity: 0;
+        transform:
+          translate(-50%, -50%)
+          scale(0.1);
+      }
+
+      84% {
+        opacity: 1;
+        transform:
+          translate(-50%, -50%)
+          scale(1);
+      }
+
+      94% {
+        opacity: 1;
+        transform:
+          translate(-50%, -50%)
+          scale(1);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translate(-50%, -50%)
+          scale(1);
+      }
+    }
+
+
+    @media (max-width: 768px) {
+
+      .cinematic-left-text {
+        left: 5vw !important;
+      }
+
+      .cinematic-right-text {
+        right: 5vw !important;
+      }
+
+      .cinematic-side-text {
+        font-size: 2rem !important;
+      }
+
+      .v2-circle-video {
+        width: 130px !important;
+        height: 130px !important;
+      }
+
+    }
+
+  `}</style>
+</section>
+
+
+
+{/* =========================================================
+    SECTION 02 — GAME ADDICTER
+========================================================= */}
+<section
+  style={{
+    position: "relative",
+
+    width: "100%",
+
+    minHeight: "75vh",
+
+    background: "#62001D",
+
+    overflow: "hidden",
+
+    display: "flex",
+
+    alignItems: "center",
+  }}
+>
+  {/* BACKGROUND SHAPE */}
+  <div
+    style={{
+      position: "absolute",
+
+      left: "-8%",
+
+      top: "15%",
+
+      width: "55%",
+
+      height: "70%",
+
+      borderRadius: "50%",
+
+      background:
+        "rgba(255,255,255,0.035)",
+
+      transform:
+        "rotate(-12deg)",
+
+      zIndex: 1,
+    }}
+  />
+
+
+  {/* SMALL LABEL */}
+  <div
+    style={{
+      position: "absolute",
+
+      left: "7vw",
+
+      top: "4rem",
+
+      color: "rgba(255,255,255,0.5)",
+
+      fontSize: "9px",
+
+      letterSpacing: "0.35em",
+
+      textTransform: "uppercase",
+
+      zIndex: 5,
+    }}
+  >
+    CREATIVE DIRECTION
+  </div>
+
+
+  {/* GAME ADDICTER */}
+  <div
+    style={{
+      position: "relative",
+
+      zIndex: 10,
+
+      width: "100%",
+
+      paddingLeft: "7vw",
+    }}
+  >
+    <h2
+      className={cormorant.className}
+      style={{
+        margin: 0,
+
+        fontSize: "clamp(6rem, 15vw, 18rem)",
+
+        fontWeight: 400,
+
+        fontStyle: "italic",
+
+        lineHeight: 0.7,
+
+        letterSpacing: "-0.06em",
+
+        color: "#fff",
+
+        whiteSpace: "nowrap",
+      }}
+    >
+      GAME
+    </h2>
+
+    <h2
+      className={cormorant.className}
+      style={{
+        margin: 0,
+
+        marginLeft: "17vw",
+
+        marginTop: "1rem",
+
+        fontSize: "clamp(5rem, 13vw, 16rem)",
+
+        fontWeight: 400,
+
+        fontStyle: "italic",
+
+        lineHeight: 0.7,
+
+        letterSpacing: "-0.06em",
+
+        color: "rgba(255,255,255,0.92)",
+
+        whiteSpace: "nowrap",
+      }}
+    >
+      ADDICTER
+    </h2>
+  </div>
+
+
+  {/* OVERLAPPING SMALL SHAPE */}
+  <div
+    style={{
+      position: "absolute",
+
+      right: "7vw",
+
+      bottom: "5rem",
+
+      width: "150px",
+
+      height: "150px",
+
+      borderRadius: "50% 50% 12px 50%",
+
+      border:
+        "1px solid rgba(255,255,255,0.22)",
+
+      transform:
+        "rotate(24deg)",
+
+      zIndex: 4,
+    }}
+  />
+
+
+  <div
+    style={{
+      position: "absolute",
+
+      right: "9vw",
+
+      bottom: "7rem",
+
+      width: "95px",
+
+      height: "95px",
+
+      borderRadius: "50%",
+
+      background:
+        "rgba(255,255,255,0.08)",
+
+      zIndex: 5,
+    }}
+  />
+
+</section>
+
+
+
+{/* =========================================================
+    SECTION 03 — 5 YOUTUBE WORKS
+========================================================= */}
+<section
+  style={{
+    position: "relative",
+
+    width: "100%",
+
+    minHeight: "100vh",
+
+    background: "#f7e8ec",
+
+    padding:
+      "10rem 5vw 12rem",
+
+    overflow: "hidden",
+  }}
+>
+
+  {/* HEADER */}
+  <div
+    style={{
+      position: "relative",
+
+      zIndex: 5,
+
+      marginBottom: "5rem",
+    }}
+  >
+
+    <div
+      style={{
+        fontSize: "9px",
+
+        letterSpacing: "0.4em",
+
+        textTransform: "uppercase",
+
+        color: "#62001D",
+
+        marginBottom: "1rem",
+      }}
+    >
+      SELECTED WORK
+    </div>
+
+    <h2
+      className={cormorant.className}
+      style={{
+        margin: 0,
+
+        fontSize: "clamp(4rem, 8vw, 10rem)",
+
+        fontWeight: 400,
+
+        fontStyle: "italic",
+
+        lineHeight: 0.8,
+
+        letterSpacing: "-0.04em",
+
+        color: "#62001D",
+      }}
+    >
+      Stories in Motion
+    </h2>
+
+  </div>
+
+
+  {/* 5 VIDEO GRID */}
+  <div
+    style={{
+      position: "relative",
+
+      display: "grid",
+
+      gridTemplateColumns:
+        "repeat(12, 1fr)",
+
+      gap: "1.5rem",
+
+      alignItems: "start",
+    }}
+  >
+
+    {/* VIDEO 01 */}
+    <div
+      style={{
+        gridColumn: "span 5",
+
+        marginTop: "0",
+      }}
+    >
+      <div className="youtube-card">
+        <iframe
+          src="https://www.youtube.com/embed/D0LLwh6Wr_Y?rel=0"
+          title="Selected Work 01"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      <div className="youtube-label">
+        01 / VOICE
+      </div>
+    </div>
+
+
+    {/* VIDEO 02 — LOWER */}
+    <div
+      style={{
+        gridColumn: "span 4",
+
+        marginTop: "8rem",
+      }}
+    >
+      <div className="youtube-card">
+        <iframe
+          src="https://www.youtube.com/embed/aXM2PvfkoOE?rel=0"
+          title="Selected Work 02"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      <div className="youtube-label">
+        02 / VISUAL
+      </div>
+    </div>
+
+
+    {/* VIDEO 03 — EVEN LOWER */}
+    <div
+      style={{
+        gridColumn: "span 3",
+
+        marginTop: "14rem",
+      }}
+    >
+      <div className="youtube-card">
+        <iframe
+          src="https://www.youtube.com/embed/qNiNd_taMT0?rel=0"
+          title="Selected Work 03"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      <div className="youtube-label">
+        03 / STORY
+      </div>
+    </div>
+
+
+    {/* VIDEO 04 — BACK UP */}
+    <div
+      style={{
+        gridColumn: "span 4",
+
+        marginTop: "3rem",
+      }}
+    >
+      <div className="youtube-card">
+        <iframe
+          src="https://www.youtube.com/embed/qNiNd_taMT0?rel=0"
+          title="Selected Work 04"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      <div className="youtube-label">
+        04 / FILM
+      </div>
+    </div>
+
+
+    {/* VIDEO 05 — LARGE */}
+    <div
+      style={{
+        gridColumn: "span 5",
+
+        marginTop: "-2rem",
+      }}
+    >
+      <div className="youtube-card youtube-card-large">
+        <iframe
+          src="https://www.youtube.com/embed/qNiNd_taMT0?rel=0"
+          title="Selected Work 05"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      <div className="youtube-label">
+        05 / EXPERIENCE
+      </div>
+    </div>
+
+  </div>
+
+
+  <style jsx>{`
+
+    .youtube-card {
+      position: relative;
+
+      width: 100%;
+
+      aspect-ratio: 16 / 9;
+
+      overflow: hidden;
+
+      background: #62001D;
+
+      border-radius: 4px;
+
+      box-shadow:
+        0 25px 70px
+        rgba(98,0,29,0.16);
+
+      transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+    }
+
+
+    .youtube-card:hover {
+      transform:
+        translateY(-8px);
+
+      box-shadow:
+        0 35px 90px
+        rgba(98,0,29,0.25);
+    }
+
+
+    .youtube-card iframe {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+    }
+
+
+    .youtube-label {
+      margin-top: 1rem;
+
+      font-size: 9px;
+
+      font-weight: 600;
+
+      letter-spacing: 0.32em;
+
+      text-transform: uppercase;
+
+      color: #62001D;
+    }
+
+
+    @media (max-width: 768px) {
+
+      section {
+        min-height: auto !important;
+      }
+
+      .youtube-card {
+        border-radius: 3px;
+      }
+
+    }
+
+  `}</style>
+
+</section>
     </main>
   );
 }

@@ -26,13 +26,6 @@ const solutionsMenu = [
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAuetVLbXiMia54Jmgy3kcFsspIIUC1-nnD5wykDiaMJ14iBftcr55eTnS_rtJPJWaECXx8f1h8mt18yPNx1wuWFSCPD1UND4Mt-gx8Ft9LB-C89de8vd7xr1OKBffy5DoH1GTYFu8hZPOKK3rF8kKmUVSu_0Pgg5C53Mk7buQ983uHlNsot-F2LeZxJCYcWnL5GFtHr2nGQQMHFyGzweMFX5IksNqPtweN2Mqo_AZyP6l7RCrkkFsg4XpcEHExFaxkNKXrOTRRMejb",
   },
-  {
-    href: "/Discover/ADcraft",
-    title: "ADcraft",
-    description: "Campaign-led creative, motion, and conversion work.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDNEVLcrfIG3AIW1a0bjO4MzNQ5P8c_Qx5nTlOJtApxRxVbH6na0073OFYiyypOYRYrQMw9zUvZPx9YweBFDGyrXIoagwN39Z_jisQpmZhsgkVZIeS7wy1NKo9A6lZCG-bumQ3iFEDwpbAZDGzBRCtaqx_xL8Fdx2TkiCG977RipXt2aKchaXqb530mRVnPKDiv8BmorU3GEOQ-ybOyVClbL_8uxJf3l0roLthhNPxJGHbWE-xqay0u82ZcD0JXRAK8cO3E0m-VgZm_",
-  },
 ];
 
 function RaRuNavbar() {
@@ -72,19 +65,17 @@ function RaRuNavbar() {
         onMouseLeave={() => setMenuOpen(false)}
         className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 ${pathname === '/Discover/MIC' ? 'border-transparent shadow-none bg-transparent' : 'border-y border-white/35 shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl ' + (isTkRoute ? 'bg-[#fff8f8]' : 'bg-white/20')} px-5 py-4 text-[#25181d] transition-all duration-300 left-0 right-0 w-full max-w-none`}
       >
-        <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw]">
-          <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
+        <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw] w-full">
+          {/* Mobile Logo (visible only on mobile) */}
+          <Link href="/" className="md:hidden flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
             <Image
               src="/site_img/logobg.png"
               alt="TK Voice &amp; Visuals"
               width={44}
               height={44}
               priority
-              className="h-10 w-10 rounded-full object-cover ring-1   md:h-11 md:w-11"
+              className="h-10 w-10 rounded-full object-cover ring-1"
             />
-            {/* <span className={`${playfair.className} max-w-[120px] text-[15px] font-bold leading-none tracking-[-0.05em] text-[#890051] sm:max-w-none sm:text-[16px] md:text-[24px]`}>
-                 TK <br></br>Voice &amp; Visuals
-            </span> */}
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -157,15 +148,24 @@ function RaRuNavbar() {
               )}
             </div>
 
-            {[
-              { label: "How it works", href: "/Workflow" },
-              { label: "Resources", href: "/Resources" },
-              { label: "Pricing", href: "/Pricing" },
-            ].map((item) => (
-              <Link key={item.label} href={item.href} className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
-                {item.label}
-              </Link>
-            ))}
+            <Link href="/Workflow" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
+              How it works
+            </Link>
+
+            <Link href="/" className="flex min-w-0 items-center mx-4" onClick={() => setMobileMenuOpen(false)}>
+              <Image
+                src="/site_img/logobg.png"
+                alt="TK Voice &amp; Visuals"
+                width={52}
+                height={52}
+                priority
+                className="h-12 w-12 rounded-full object-cover ring-1"
+              />
+            </Link>
+
+            <Link href="/Pricing" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
+              Pricing
+            </Link>
 
             <Link href="/About" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
               About
@@ -225,7 +225,6 @@ function RaRuNavbar() {
                 <div className="grid gap-2 sm:grid-cols-2">
                   {[
                     { label: "How it works", href: "/Workflow" },
-                    { label: "Resources", href: "/Resources" },
                     { label: "Pricing", href: "/Pricing" },
                     { label: "About", href: "/About" },
                   ].map((item) => (
@@ -246,7 +245,6 @@ function RaRuNavbar() {
                 <div className="grid gap-2">
                   {[
                     { href: "/Discover/RaRu", label: "SOFTWARE DEVELOPMENT" },
-                    { href: "/Discover/ADcraft", label: "ADcraft" },
                     { href: "/Discover/Nexora", label: "Nexora" },
                     { href: "/Discover/MIC", label: "MIC" },
                     { href: "/Discover/eyeCatching", label: "eyeCatching" },

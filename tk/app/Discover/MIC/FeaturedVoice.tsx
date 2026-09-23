@@ -35,55 +35,6 @@ const voiceSamples = [
   },
 ];
 
-function VideoCard() {
-  const vidRef = useRef<HTMLVideoElement>(null);
-  const [paused, setPaused] = useState(false);
-
-  const toggle = () => {
-    if (!vidRef.current) return;
-    if (vidRef.current.paused) {
-      vidRef.current.play();
-      setPaused(false);
-    } else {
-      vidRef.current.pause();
-      setPaused(true);
-    }
-  };
-
-  return (
-    <div
-      onClick={toggle}
-      title="Click to pause / play"
-      style={{ position: "relative", width: "100%", cursor: "pointer" }}
-    >
-      <video
-        ref={vidRef}
-        src="/voxium/RYUGA.mp4"
-        autoPlay
-        loop
-        playsInline
-        style={{ width: "100%", display: "block", borderRadius: "22px" }}
-      />
-      {paused && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(0,0,0,0.25)",
-            borderRadius: "22px",
-          }}
-        >
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="white" opacity="0.8">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function FeaturedVoice() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -99,7 +50,7 @@ export default function FeaturedVoice() {
         audioRef.current?.pause();
         setIsPlaying(false);
       } else {
-        audioRef.current?.play().catch(() => {});
+        audioRef.current?.play().catch(() => { });
         setIsPlaying(true);
       }
     } else {
@@ -144,43 +95,24 @@ export default function FeaturedVoice() {
   return (
     <section
       id="samples"
-      className="relative w-full overflow-hidden text-white"
-      style={{ minHeight: "100vh" }}
+      className="relative w-full overflow-hidden text-white bg-transparent"
     >
-      {/* ── BACKGROUND IMAGE ── */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/voxium/bgsecond.jpg"
-          alt=""
-          fill
-          priority
-          style={{ objectFit: "cover", objectPosition: "center" }}
-        />
-        {/* subtle dark overlay for readability only */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(10,4,8,0.55)",
-          }}
-        />
-      </div>
 
       {/* ── CONTENT GRID ── */}
-      <div className="relative z-10 mx-auto grid min-h-[100vh] max-w-[1440px] grid-cols-1 lg:grid-cols-2">
-        {/* ─────────── LEFT COLUMN ─────────── */}
-        <div className="flex flex-col justify-center px-[5vw] py-20 lg:px-16 lg:py-28">
+      <div className="relative z-10 mx-auto flex flex-col items-center w-full max-w-[1440px]">
+        {/* ─────────── CENTERED CONTENT ─────────── */}
+        <div className="flex flex-col items-center justify-center px-[5vw] py-12 lg:px-16 w-full">
           {/* Section Heading */}
-          <div className="mb-10">
+          <div className="mb-10 text-center">
             <h2
               className={`${cormorant.className} text-[clamp(3rem,7vw,5.5rem)] font-700 italic leading-[0.95] tracking-wide text-white`}
             >
-              FEATURED
+              REALITY
             </h2>
             <span
               className={`${cormorant.className} block text-[clamp(2.2rem,5vw,4rem)] font-300 italic tracking-[0.08em] text-[#990E53]`}
             >
-              VOICE
+              TK  VOICE
             </span>
           </div>
 
@@ -216,6 +148,7 @@ export default function FeaturedVoice() {
                   src="/voxium/sample.png"
                   alt="Voice Artist"
                   fill
+                  sizes="64px"
                   style={{ objectFit: "cover", objectPosition: "center top" }}
                 />
               </div>
@@ -239,9 +172,8 @@ export default function FeaturedVoice() {
                   <div
                     key={sample.category}
                     onClick={() => handleToggle(index)}
-                    className={`group relative flex cursor-pointer items-center gap-4 rounded-xl px-4 py-3.5 transition-all duration-300 ${
-                      isActive ? "bg-white/[0.08]" : "hover:bg-white/[0.04]"
-                    }`}
+                    className={`group relative flex cursor-pointer items-center gap-4 rounded-xl px-4 py-3.5 transition-all duration-300 ${isActive ? "bg-white/[0.08]" : "hover:bg-white/[0.04]"
+                      }`}
                   >
                     {isActive && (
                       <div
@@ -274,16 +206,14 @@ export default function FeaturedVoice() {
 
                     <div className="flex-1 min-w-0">
                       <p
-                        className={`${inter.className} truncate text-[13px] font-semibold transition-colors ${
-                          isActive ? "text-[#990E53]" : "text-white/90"
-                        }`}
+                        className={`${inter.className} truncate text-[13px] font-semibold transition-colors ${isActive ? "text-[#990E53]" : "text-white/90"
+                          }`}
                       >
                         {sample.category}
                       </p>
                       <p
-                        className={`${inter.className} mt-0.5 truncate text-[10px] leading-snug ${
-                          isActive ? "text-white/50" : "text-white/25"
-                        }`}
+                        className={`${inter.className} mt-0.5 truncate text-[10px] leading-snug ${isActive ? "text-white/50" : "text-white/25"
+                          }`}
                       >
                         {sample.description}
                       </p>
@@ -318,25 +248,6 @@ export default function FeaturedVoice() {
             </div>
           </div>
         </div>
-
-        {/* ────────── RIGHT COLUMN — Video Card ────────── */}
-        <div className="relative hidden lg:flex items-center justify-center py-28 px-12">
-          {/* Transparent glass card with video */}
-          <div
-            style={{
-              width: "clamp(280px, 28vw, 440px)",
-              borderRadius: "24px",
-              overflow: "hidden",
-              background: "transparent",
-              border: "1.5px solid rgba(255,255,255,0.15)",
-              backdropFilter: "blur(2px)",
-              WebkitBackdropFilter: "blur(2px)",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08)",
-            }}
-          >
-            <VideoCard />
-          </div>
-        </div>
       </div>
 
       {/* ── Mobile profile image ── */}
@@ -356,6 +267,7 @@ export default function FeaturedVoice() {
             src="/voxium/sample.png"
             alt="Voice Artist"
             fill
+            sizes="(max-width: 1024px) 260px, 33vw"
             style={{ objectFit: "cover", objectPosition: "center top" }}
           />
         </div>
@@ -363,6 +275,7 @@ export default function FeaturedVoice() {
 
       <audio
         ref={audioRef}
+        preload="none"
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnded}
         className="hidden"
