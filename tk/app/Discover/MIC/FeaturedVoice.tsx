@@ -145,7 +145,7 @@ export default function FeaturedVoice() {
                 }}
               >
                 <Image
-                  src="/voxium/sample.png"
+                  src="/voxium/dp.jpg"
                   alt="Voice Artist"
                   fill
                   sizes="64px"
