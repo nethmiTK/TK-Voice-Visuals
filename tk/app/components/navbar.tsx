@@ -93,13 +93,13 @@ function RaRuNavbar() {
           </Link>
 
           {/* ── Desktop nav ─────────────────────────────────────── */}
-          <div className="hidden items-center gap-6 xl:gap-8 md:flex">
+          <div className="hidden items-center gap-4 xl:gap-6 md:flex">
             {/* Left links (before logo) */}
             {centreLinks.slice(0, 3).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
+                className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
               >
                 {item.label}
               </Link>
@@ -126,7 +126,7 @@ function RaRuNavbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
+                className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
               >
                 {item.label}
               </Link>

@@ -682,6 +682,7 @@ function CinematicSection() {
   const video2Ref = useRef<HTMLVideoElement>(null);
   const video3Ref = useRef<HTMLVideoElement>(null);
   const video4Ref = useRef<HTMLVideoElement>(null);
+  const video5Ref = useRef<HTMLVideoElement>(null);
 
   const [sectionVisible, setSectionVisible] = useState(false);
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
@@ -713,6 +714,7 @@ function CinematicSection() {
       if (activeVideo === 2) stopVideo(video2Ref.current);
       if (activeVideo === 3) stopVideo(video3Ref.current);
       if (activeVideo === 4) stopVideo(video4Ref.current);
+      if (activeVideo === 5) stopVideo(video5Ref.current);
     }
 
     setActiveVideo(number);
@@ -775,6 +777,7 @@ function CinematicSection() {
           stopVideo(video2Ref.current);
           stopVideo(video3Ref.current);
           stopVideo(video4Ref.current);
+          stopVideo(video5Ref.current);
           setActiveVideo(null);
         }
       },
@@ -792,6 +795,7 @@ function CinematicSection() {
       stopVideo(video2Ref.current);
       stopVideo(video3Ref.current);
       stopVideo(video4Ref.current);
+      stopVideo(video5Ref.current);
     };
   }, []);
 
@@ -825,6 +829,13 @@ function CinematicSection() {
       isYouTube: true,
       youtubeId: "AF6Zj4u8OEg",
       ref: null,
+    },
+    {
+      number: 5,
+      category: "FINAL",
+      image: "/voxium/vs.png",
+      video: "/voxium/m5.mp4",
+      ref: video5Ref,
     }
   ];
 
@@ -1276,14 +1287,14 @@ const youtubeWorks = [
   {
     id: "04",
     category: "FILM",
-    video: "qNiNd_taMT0",
+    video: "Rb8T0Pw_UhY",
     span: "md:col-span-4",
     margin: "md:mt-16",
   },
   {
     id: "05",
     category: "EXPERIENCE",
-    video: "qNiNd_taMT0",
+    video: "9Kx86KEXXfU",
     span: "md:col-span-5",
     margin: "md:mt-[-30px]",
   },
