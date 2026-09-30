@@ -54,10 +54,9 @@ export default function AboutPage() {
   ];
 
   const stats = [
-    { number: '124+', label: 'Global Campaigns' },
-    { number: '8.2M', label: 'Leads Generated' },
-    { number: '15', label: 'Industry Awards' },
-    { number: '98%', label: 'Client Retention' },
+    { number: '10+', label: 'Projects Completed' },
+    { number: '10', label: 'Satisfied Clients' },
+    { number: '2', label: 'Years Experience' },
   ];
 
   return (
@@ -233,7 +232,7 @@ export default function AboutPage() {
       {/* Agency Stats */}
       <section className="py-16 md:py-32 px-4 sm:px-6 md:px-[5vw]">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {stats.map((stat, idx) => (
               <div key={idx} className="p-6 md:p-8 rounded-2xl bg-[#fbe2e9]">
                 <div className="text-4xl md:text-5xl font-bold text-[#b10e6b] mb-2 md:mb-3">
@@ -264,7 +263,7 @@ export default function AboutPage() {
               Our Philosophy
             </h2>
             <p className={`${playfair.className} text-white/80 text-base md:text-lg leading-relaxed mb-8 italic font-light`}>
-              &quot;Authority isn&apos;t shouted. It is felt in the precision of the message and the clarity of the vision.&quot;
+              Passionate about creating impactful digital experiences through voice-over production, video editing, social media marketing, and innovative IT solutions I am dedicated to blending creativity with technology to deliver meaningful digital solutions, exceptional user experiences and value-driven results for clients and businesses.
             </p>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0 bg-white/20" />
