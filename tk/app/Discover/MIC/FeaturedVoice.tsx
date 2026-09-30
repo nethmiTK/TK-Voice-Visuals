@@ -16,22 +16,22 @@ const voiceSamples = [
   {
     category: "Track 01",
     description: "Voice sample — professional voice over recording.",
-    audio: "/audio/1.mp3",
+    audio: "/audio/5.ogg",
   },
   {
     category: "Track 02",
     description: "Voice sample — professional voice over recording.",
-    audio: "/audio/2.mp3",
+    audio: "/audio/2.ogg",
   },
   {
     category: "Track 03",
     description: "Voice sample — professional voice over recording.",
-    audio: "/audio/3.mp3",
+    audio: "/audio/3.ogg",
   },
   {
     category: "Track 04",
     description: "Voice sample — professional voice over recording.",
-    audio: "/audio/4.mp3",
+    audio: "/audio/1.ogg",
   },
 ];
 

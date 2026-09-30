@@ -432,44 +432,7 @@ export default function RaRuPage() {
 				</div>
 			</section>
 
-			<footer className="w-full border-t-0 bg-[#ffffff] px-[5vw] py-24">
-				<div className="mx-auto flex max-w-[1600px] flex-col gap-16 md:flex-row md:items-start md:justify-between">
-					<div>
-						<div className="mb-6 text-lg font-black text-[#25181d]">TK Voice &amp; Visuals</div>
-						<p className="mb-8 max-w-xs text-sm leading-relaxed text-[#665c5d]">Crafting elite digital infrastructure for the visionaries of tomorrow.</p>
-						<div className="flex gap-6 text-[10px] uppercase tracking-widest text-[#665c5d]">
-							<Link href="#" className="transition-colors hover:text-[#b10e6b]">LinkedIn</Link>
-							<Link href="#" className="transition-colors hover:text-[#b10e6b]">Instagram</Link>
-						</div>
-					</div>
 
-					<div className="grid grid-cols-2 gap-16 md:grid-cols-3">
-						<div>
-							<h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#25181d]">Capabilities</h5>
-							<ul className="space-y-4 text-sm text-[#665c5d]">
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">Digital Strategy</Link></li>
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">UI/UX Design</Link></li>
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">Web Systems</Link></li>
-							</ul>
-						</div>
-						<div>
-							<h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#25181d]">Company</h5>
-							<ul className="space-y-4 text-sm text-[#665c5d]">
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">About</Link></li>
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">Careers</Link></li>
-								<li><Link href="#" className="transition-colors hover:text-[#b10e6b]">Contact</Link></li>
-							</ul>
-						</div>
-						<div className="col-span-2 md:col-span-1">
-							<p className="mb-4 text-sm leading-relaxed text-[#665c5d]">&copy; 2026 TK Voice &amp; Visuals. All rights reserved.</p>
-							<div className="flex gap-4 text-[10px] uppercase tracking-widest text-[#665c5d]">
-								<Link href="#" className="transition-colors hover:text-[#b10e6b]">Privacy Policy</Link>
-								<Link href="#" className="transition-colors hover:text-[#b10e6b]">Terms of Service</Link>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
 		</main>
 	);
 }

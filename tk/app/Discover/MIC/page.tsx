@@ -680,6 +680,8 @@ function CinematicSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const video1Ref = useRef<HTMLVideoElement>(null);
   const video2Ref = useRef<HTMLVideoElement>(null);
+  const video3Ref = useRef<HTMLVideoElement>(null);
+  const video4Ref = useRef<HTMLVideoElement>(null);
 
   const [sectionVisible, setSectionVisible] = useState(false);
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
@@ -709,6 +711,8 @@ function CinematicSection() {
     if (activeVideo && activeVideo !== number) {
       if (activeVideo === 1) stopVideo(video1Ref.current);
       if (activeVideo === 2) stopVideo(video2Ref.current);
+      if (activeVideo === 3) stopVideo(video3Ref.current);
+      if (activeVideo === 4) stopVideo(video4Ref.current);
     }
 
     setActiveVideo(number);
@@ -769,6 +773,8 @@ function CinematicSection() {
         if (!visible) {
           stopVideo(video1Ref.current);
           stopVideo(video2Ref.current);
+          stopVideo(video3Ref.current);
+          stopVideo(video4Ref.current);
           setActiveVideo(null);
         }
       },
@@ -784,6 +790,8 @@ function CinematicSection() {
     return () => {
       stopVideo(video1Ref.current);
       stopVideo(video2Ref.current);
+      stopVideo(video3Ref.current);
+      stopVideo(video4Ref.current);
     };
   }, []);
 
@@ -804,12 +812,20 @@ function CinematicSection() {
     },
     {
       number: 3,
-      category: "SOCIAL",
-      image: "https://img.youtube.com/vi/AF6Zj4u8OEg/maxresdefault.jpg",
+      category: "PROMO",
+      image: "/voxium/v.png",
+      isYouTube: true,
+      youtubeId: "Rb8T0Pw_UhY",
+      ref: null,
+    },
+    {
+      number: 4,
+      category: "SHOWREEL",
+      image: "/voxium/vs.png",
       isYouTube: true,
       youtubeId: "AF6Zj4u8OEg",
       ref: null,
-    },
+    }
   ];
 
   return (
@@ -874,10 +890,7 @@ function CinematicSection() {
                 }}
                 className="group mx-auto w-full max-w-[390px]"
               >
-                <div className="mb-3 flex items-center justify-between border-b border-[#990E53]/25 pb-2">
-                  <span className="text-[9px] font-bold tracking-[0.35em] text-[#990E53]">
-                    0{item.number}
-                  </span>
+                <div className="mb-3 flex items-center justify-end border-b border-[#990E53]/25 pb-2">
 
                   <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#990E53]/65">
                     {item.category}
@@ -888,17 +901,17 @@ function CinematicSection() {
                   className="relative mx-auto w-full cursor-pointer overflow-hidden rounded-[3px] bg-[#990E53]/10 shadow-[0_25px_70px_rgba(153,14,83,0.18)]"
                   onMouseEnter={() => {
                     if (isHoverDevice()) {
-                      activateVideo(item.ref.current, item.number);
+                      activateVideo(item.ref ? item.ref.current : null, item.number);
                     }
                   }}
                   onMouseLeave={() => {
                     if (isHoverDevice()) {
-                      deactivateVideo(item.ref.current, item.number);
+                      deactivateVideo(item.ref ? item.ref.current : null, item.number);
                     }
                   }}
                   onClick={() => {
                     if (!isHoverDevice()) {
-                      handleTouch(item.ref.current, item.number);
+                      handleTouch(item.ref ? item.ref.current : null, item.number);
                     }
                   }}
                 >
@@ -1201,6 +1214,12 @@ function GameAddicterSection() {
           className="fixed inset-0 z-[999] overflow-hidden bg-[#24000f]"
           onClick={() => setActiveImage(null)}
         >
+          <button 
+            onClick={(e) => { e.stopPropagation(); setActiveImage(null); }}
+            className="absolute top-6 right-6 z-[1000] text-white/70 hover:text-white text-4xl font-light transition-colors"
+          >
+            ×
+          </button>
           <img
             src={images[activeImage].image}
             alt={images[activeImage].title}
@@ -1581,45 +1600,7 @@ export default function VoxiumPage() {
 
       <YouTubeWorksSection />
 
-      {/* 07 — FOOTER */}
-      <footer className="w-full border-t border-[#DF2085]/20 bg-black px-[5vw] py-24 text-white">
-        <div className="mx-auto flex max-w-[1600px] flex-col gap-16 md:flex-row md:items-start md:justify-between">
-          <div>
-            <div className="mb-6 text-lg font-black text-[#FFA3D0]">TK Voice &amp; Visuals</div>
-            <p className="mb-8 max-w-xs text-sm leading-relaxed text-[#DF2085]/70">Voice that makes you listen. Visuals that make you stay.</p>
-            <div className="flex gap-6 text-[10px] uppercase tracking-widest text-[#DF2085]/70">
-              <Link href="https://www.linkedin.com/in/nethmi-thalikoralage-5265032a0/" className="transition-colors hover:text-[#FFA3D0]">LinkedIn</Link>
-              <Link href="https://web.facebook.com/profile.php?id=61585810421141" className="transition-colors hover:text-[#FFA3D0]">Facebook</Link>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-16 md:grid-cols-3">
-            <div>
-              <h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#FFA3D0]">Capabilities</h5>
-              <ul className="space-y-4 text-sm text-[#DF2085]/70">
-                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Voice Over</Link></li>
-                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Video Editing</Link></li>
-                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Social Media content</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#FFA3D0]">Company</h5>
-              <ul className="space-y-4 text-sm text-[#DF2085]/70">
-                <li><Link href="/About" className="transition-colors hover:text-[#FFA3D0]">About</Link></li>
-                <li><Link href="/Consultancy" className="transition-colors hover:text-[#FFA3D0]">Contact</Link></li>
-                <li><Link href="/systemTK" className="transition-colors hover:text-[#FFA3D0]">TK System</Link></li>
-              </ul>
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <p className="mb-4 text-sm leading-relaxed text-[#DF2085]/70">&copy; 2026 TK Voice &amp; Visuals. All rights reserved.</p>
-              <div className="flex gap-4 text-[10px] uppercase tracking-widest text-[#DF2085]/70">
-                <Link href="#" className="transition-colors hover:text-[#FFA3D0]">Privacy Policy</Link>
-                <Link href="#" className="transition-colors hover:text-[#FFA3D0]">Terms of Service</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
