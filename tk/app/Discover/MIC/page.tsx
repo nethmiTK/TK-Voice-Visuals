@@ -1022,7 +1022,7 @@ function GameAddicterSection() {
   const [activeImage, setActiveImage] = useState<number | null>(null);
 
   const images = Array.from({ length: 15 }, (_, i) => ({
-    image: `/voxium/cards/${i + 1}.jpg`,
+    image: `/voxium/cards/${(i % 11) + 1}.jpg`,
     title: [
       "VOICE",
       "STORY",
