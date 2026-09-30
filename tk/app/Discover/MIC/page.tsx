@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -54,10 +55,15 @@ function VoxiumHero() {
               Sri Lankan Research Voice visuals Artist
             </p>
 
-            <h1 className="font-[var(--font-inter)] text-[16vw] font-black leading-[0.78] tracking-[-0.075em] text-[#FFA3D0] sm:text-[14vw] md:text-[11vw] lg:text-[9.5vw]">
+            <motion.h1
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="font-[var(--font-inter)] text-[16vw] font-black leading-[0.78] tracking-[-0.075em] text-[#FFA3D0] sm:text-[14vw] md:text-[11vw] lg:text-[9.5vw]"
+            >
               TK Voice Visuals
-              
-            </h1>
+            </motion.h1>
 
             <p className="mt-6 max-w-[530px] text-[10px] uppercase leading-[1.8] tracking-[0.22em] text-[#DF2085]/75 sm:mt-7 sm:text-sm sm:tracking-[0.28em]">
               Voice that makes you listen.
@@ -257,7 +263,13 @@ function AudioShowcase() {
       </div>
 
       <div className="relative z-10 flex min-h-[60vh] w-full">
-        <div className="relative hidden w-[27%] shrink-0 md:block">
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative hidden w-[27%] shrink-0 md:block"
+        >
           <div className="absolute inset-0 overflow-visible">
             <Image
               src="/voxium/left.jpg"
@@ -279,7 +291,7 @@ function AudioShowcase() {
               <p>ENHANCE YOUR BRAND</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="relative flex min-w-0 flex-1 flex-col justify-center px-5 py-16 sm:px-10 md:px-12 lg:px-16">
           <p className="mb-4 text-[9px] uppercase tracking-[0.5em] text-[#62001d]/60">
@@ -692,26 +704,28 @@ function CinematicSection() {
     video: HTMLVideoElement | null,
     number: number
   ) => {
-    if (!sectionVisible || !video) return;
+    if (!sectionVisible) return;
 
-    const other =
-      number === 1 ? video2Ref.current : video1Ref.current;
-
-    stopVideo(other);
+    if (activeVideo && activeVideo !== number) {
+      if (activeVideo === 1) stopVideo(video1Ref.current);
+      if (activeVideo === 2) stopVideo(video2Ref.current);
+    }
 
     setActiveVideo(number);
 
-    video.currentTime = 0;
-    video.muted = false;
+    if (video) {
+      video.currentTime = 0;
+      video.muted = false;
 
-    try {
-      await video.play();
-    } catch {
       try {
-        video.muted = true;
         await video.play();
       } catch {
-        setActiveVideo(null);
+        try {
+          video.muted = true;
+          await video.play();
+        } catch {
+          setActiveVideo(null);
+        }
       }
     }
   };
@@ -720,7 +734,7 @@ function CinematicSection() {
     video: HTMLVideoElement | null,
     number: number
   ) => {
-    stopVideo(video);
+    if (video) stopVideo(video);
 
     setActiveVideo((current) =>
       current === number ? null : current
@@ -731,7 +745,7 @@ function CinematicSection() {
     video: HTMLVideoElement | null,
     number: number
   ) => {
-    if (!sectionVisible || !video) return;
+    if (!sectionVisible) return;
 
     if (activeVideo === number) {
       deactivateVideo(video, number);
@@ -788,6 +802,14 @@ function CinematicSection() {
       video: "/voxium/V2.mp4",
       ref: video2Ref,
     },
+    {
+      number: 3,
+      category: "SOCIAL",
+      image: "https://img.youtube.com/vi/AF6Zj4u8OEg/maxresdefault.jpg",
+      isYouTube: true,
+      youtubeId: "AF6Zj4u8OEg",
+      ref: null,
+    },
   ];
 
   return (
@@ -797,9 +819,9 @@ function CinematicSection() {
     >
       <div className="mx-auto w-full max-w-[1500px] px-5 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 lg:py-20 xl:px-20">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
           transition={{
             duration: 0.8,
             ease: [0.22, 1, 0.36, 1],
@@ -824,7 +846,7 @@ function CinematicSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 md:grid-cols-2 md:gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 md:gap-10 lg:gap-16">
           {videos.map((item, index) => {
             const isActive = activeVideo === item.number;
 
@@ -833,16 +855,16 @@ function CinematicSection() {
                 key={item.number}
                 initial={{
                   opacity: 0,
-                  y: 80,
+                  x: -100,
                   scale: 0.96,
                 }}
                 whileInView={{
                   opacity: 1,
-                  y: 0,
+                  x: 0,
                   scale: 1,
                 }}
                 viewport={{
-                  once: true,
+                  once: false,
                   amount: 0.2,
                 }}
                 transition={{
@@ -896,19 +918,30 @@ function CinematicSection() {
                       className="absolute inset-0 h-full w-full object-cover"
                     />
 
-                    <video
-                      ref={item.ref}
-                      src={item.video}
-                      loop
-                      muted
-                      playsInline
-                      preload="metadata"
-                      className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
-                        isActive
-                          ? "scale-100 opacity-100"
-                          : "scale-[1.04] opacity-0"
-                      }`}
-                    />
+                    {!item.isYouTube ? (
+                      <video
+                        ref={item.ref}
+                        src={item.video}
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
+                          isActive
+                            ? "scale-100 opacity-100"
+                            : "scale-[1.04] opacity-0"
+                        }`}
+                      />
+                    ) : (
+                      isActive && (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${item.youtubeId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&playsinline=1`}
+                          title="YouTube short"
+                          allow="autoplay; encrypted-media"
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      )
+                    )}
 
                     <div
                       className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
@@ -956,6 +989,20 @@ function CinematicSection() {
                         Hover / Tap
                       </span>
                     </div>
+
+                    {isActive && !isHoverDevice() && (
+                      <div
+                        className="absolute right-4 top-4 sm:right-5 sm:top-5 z-20"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deactivateVideo(item.ref?.current || null, item.number);
+                        }}
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E887B7]/70 bg-[#990E53]/80 text-[#E887B7] backdrop-blur-md">
+                          ✕
+                        </span>
+                      </div>
+                    )}
 
                     <motion.div
                       initial={false}
@@ -1251,7 +1298,7 @@ function YouTubeWorksSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
           variants={{
             hidden: {},
             visible: {
@@ -1334,7 +1381,7 @@ function YouTubeWorksSection() {
             variants={{
               hidden: {
                 opacity: 0,
-                x: 40,
+                x: -100,
               },
               visible: {
                 opacity: 1,
@@ -1363,14 +1410,14 @@ function YouTubeWorksSection() {
               key={work.id}
               initial={{
                 opacity: 0,
-                y: 70,
+                x: -100,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0,
+                x: 0,
               }}
               viewport={{
-                once: true,
+                once: false,
                 amount: 0.15,
               }}
               transition={{
@@ -1533,6 +1580,46 @@ export default function VoxiumPage() {
       {/* 06 — YOUTUBE */}
 
       <YouTubeWorksSection />
+
+      {/* 07 — FOOTER */}
+      <footer className="w-full border-t border-[#DF2085]/20 bg-black px-[5vw] py-24 text-white">
+        <div className="mx-auto flex max-w-[1600px] flex-col gap-16 md:flex-row md:items-start md:justify-between">
+          <div>
+            <div className="mb-6 text-lg font-black text-[#FFA3D0]">TK Voice &amp; Visuals</div>
+            <p className="mb-8 max-w-xs text-sm leading-relaxed text-[#DF2085]/70">Voice that makes you listen. Visuals that make you stay.</p>
+            <div className="flex gap-6 text-[10px] uppercase tracking-widest text-[#DF2085]/70">
+              <Link href="https://www.linkedin.com/in/nethmi-thalikoralage-5265032a0/" className="transition-colors hover:text-[#FFA3D0]">LinkedIn</Link>
+              <Link href="https://web.facebook.com/profile.php?id=61585810421141" className="transition-colors hover:text-[#FFA3D0]">Facebook</Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-16 md:grid-cols-3">
+            <div>
+              <h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#FFA3D0]">Capabilities</h5>
+              <ul className="space-y-4 text-sm text-[#DF2085]/70">
+                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Voice Over</Link></li>
+                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Video Editing</Link></li>
+                <li><Link href="/MIC" className="transition-colors hover:text-[#FFA3D0]">Social Media content</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-[#FFA3D0]">Company</h5>
+              <ul className="space-y-4 text-sm text-[#DF2085]/70">
+                <li><Link href="/About" className="transition-colors hover:text-[#FFA3D0]">About</Link></li>
+                <li><Link href="/Consultancy" className="transition-colors hover:text-[#FFA3D0]">Contact</Link></li>
+                <li><Link href="/systemTK" className="transition-colors hover:text-[#FFA3D0]">TK System</Link></li>
+              </ul>
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <p className="mb-4 text-sm leading-relaxed text-[#DF2085]/70">&copy; 2026 TK Voice &amp; Visuals. All rights reserved.</p>
+              <div className="flex gap-4 text-[10px] uppercase tracking-widest text-[#DF2085]/70">
+                <Link href="#" className="transition-colors hover:text-[#FFA3D0]">Privacy Policy</Link>
+                <Link href="#" className="transition-colors hover:text-[#FFA3D0]">Terms of Service</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
