@@ -5,65 +5,86 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
 type NavbarProps = {
   variant?: "default" | "raru";
   forceVisible?: boolean;
 };
 
-const solutionsMenu = [
-  {
-    href: "/Discover/RaRu",
-    title: "Software Development",
-    description: "Website,Mobile App,Web system and etc",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAuetVLbXiMia54Jmgy3kcFsspIIUC1-nnD5wykDiaMJ14iBftcr55eTnS_rtJPJWaECXx8f1h8mt18yPNx1wuWFSCPD1UND4Mt-gx8Ft9LB-C89de8vd7xr1OKBffy5DoH1GTYFu8hZPOKK3rF8kKmUVSu_0Pgg5C53Mk7buQ983uHlNsot-F2LeZxJCYcWnL5GFtHr2nGQQMHFyGzweMFX5IksNqPtweN2Mqo_AZyP6l7RCrkkFsg4XpcEHExFaxkNKXrOTRRMejb",
-  },
+/* ─── desktop centre links ─────────────────────────────────────────── */
+const centreLinks = [
+  { href: "/TK",       label: "Services" },
+  { href: "/MIC",      label: "Voice & Visuals" },
+  { href: "/systemTK", label: "TK System" },
+  { href: "/Workflow", label: "How it works" },
+  { href: "/Pricing",  label: "Pricing" },
+  { href: "/About",    label: "About" },
+];
+
+/* ─── mobile nav links ─────────────────────────────────────────────── */
+const mobileLinks = [
+  { href: "/TK",       label: "Services" },
+  { href: "/MIC",      label: "Voice & Visuals" },
+  { href: "/systemTK", label: "TK System" },
+  { href: "/Workflow", label: "How it works" },
+  { href: "/Pricing",  label: "Pricing" },
+  { href: "/About",    label: "About" },
 ];
 
 function RaRuNavbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isSignInRoute = pathname?.toLowerCase().startsWith("/signin");
   const isTkRoute = pathname?.toLowerCase().startsWith("/tk");
 
+  /* Close mobile menu on Escape */
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setMenuOpen(false);
         setMobileMenuOpen(false);
       }
     };
-
     document.addEventListener("keydown", handleEscape);
-
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [isSignInRoute, isTkRoute]);
+  }, []);
 
+  /* Close mobile menu on route change */
   useEffect(() => {
-    setMenuOpen(false);
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  /* Hide on root / splash */
   if (pathname === "/") {
     return null;
   }
 
+  /* Transparent navbar on the MIC page */
+  const isMicPage =
+    pathname === "/MIC" ||
+    pathname === "/Discover/MIC";
+
+  const navBg = isMicPage
+    ? "border-transparent shadow-none bg-transparent"
+    : `border-y border-white/35 shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl ${
+        isTkRoute ? "bg-[#fff8f8]" : "bg-white/20"
+      }`;
+
   return (
     <>
       <nav
-        onMouseLeave={() => setMenuOpen(false)}
-        className={`fixed top-0 z-50 mx-auto rounded-none border-x-0 ${pathname === '/Discover/MIC' ? 'border-transparent shadow-none bg-transparent' : 'border-y border-white/35 shadow-[0_20px_50px_rgba(5,7,18,0.18)] backdrop-blur-2xl ' + (isTkRoute ? 'bg-[#fff8f8]' : 'bg-white/20')} px-5 py-4 text-[#25181d] transition-all duration-300 left-0 right-0 w-full max-w-none`}
+        className={`fixed top-0 z-50 left-0 right-0 w-full max-w-none rounded-none border-x-0 px-5 py-4 text-[#25181d] transition-all duration-300 ${navBg}`}
       >
         <div className="flex items-center justify-between gap-3 px-0 md:px-[5vw] w-full">
-          {/* Mobile Logo (visible only on mobile) */}
-          <Link href="/" className="md:hidden flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setMobileMenuOpen(false)}>
+
+          {/* ── Mobile logo ─────────────────────────────────────── */}
+          <Link
+            href="/"
+            className="md:hidden flex min-w-0 items-center gap-2.5 sm:gap-3"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             <Image
               src="/site_img/logobg.png"
-              alt="TK Voice &amp; Visuals"
+              alt="TK Voice & Visuals"
               width={44}
               height={44}
               priority
@@ -71,84 +92,28 @@ function RaRuNavbar() {
             />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
-            <div className="relative">
+          {/* ── Desktop nav ─────────────────────────────────────── */}
+          <div className="hidden items-center gap-6 xl:gap-8 md:flex">
+            {/* Left links (before logo) */}
+            {centreLinks.slice(0, 3).map((item) => (
               <Link
-                href="/TK"
-                onMouseEnter={() => setMenuOpen(true)}
-                className="group flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
+                key={item.href}
+                href={item.href}
+                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
               >
-                Solutions
-                <span className={`text-[14px] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`}>⌄</span>
+                {item.label}
               </Link>
+            ))}
 
-              {menuOpen && (
-                <div className="absolute left-0 top-[calc(100%+16px)] w-[760px] overflow-hidden rounded-[28px] border border-white/55 bg-white/72 shadow-[0_26px_80px_rgba(177,14,107,0.10)] backdrop-blur-2xl">
-                  <div className="grid grid-cols-[1.1fr_1.5fr] gap-4 p-4">
-                    <div className="rounded-[20px] border border-[#b10e6b]/8 bg-white/55 p-4">
-                      <div className="mb-4 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Discover</div>
-                      <div className="space-y-2">
-                        {[
-                          { href: "/Discover/RaRu", label: "Business Solutions", desc: "Digital solutions hub" },
-                          // { href: "/Discover/ADcraft", label: "ADcraft", desc: "Campaign creative" },
-                          // { href: "/Discover/Nexora", label: "Nexora", desc: "Automation systems" },
-                          { href: "/Discover/MIC", label: "Voice Over", desc: "Voice-led experiences" },
-                          { href: "/Discover/eyeCatching", label: "Video editing", desc: "Editorial visuals" },
-                        ].map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            className="flex items-start justify-between rounded-[16px] px-4 py-3 transition-colors hover:bg-[#f5dce3]/70"
-                            onClick={() => setMenuOpen(false)}
-                          >
-                            <div>
-                              <div className="text-[14px] font-semibold text-[#25181d]">{item.label}</div>
-                              <div className="text-[12px] text-[#857278]">{item.desc}</div>
-                            </div>
-                            <div className="text-[18px] text-[#b10e6b]/45">›</div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="grid gap-3">
-                      {solutionsMenu.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMenuOpen(false)}
-                          className="group relative overflow-hidden rounded-[20px] border border-white/50 bg-white/70 transition-transform hover:-translate-y-0.5"
-                        >
-                          <img alt={item.title} src={item.image} className="absolute inset-0 h-full w-full object-cover opacity-28 transition-transform duration-500 group-hover:scale-105" />
-                          <div className="absolute inset-0 bg-gradient-to-r from-white/78 via-white/44 to-[#f5dce3]/25" />
-                          <div className="relative flex min-h-[126px] items-end p-4">
-                            <div>
-                              <div className="mb-1 text-[14px] font-semibold text-[#25181d]">{item.title}</div>
-                              <div className="max-w-[250px] text-[12px] leading-5 text-[#6b4d57]">{item.description}</div>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-
-                      <div className="rounded-[18px] border border-[#b10e6b]/10 bg-white/55 p-4 text-center">
-                        <Link href="/Discover/RaRu" onClick={() => setMenuOpen(false)} className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#890051] transition-colors hover:text-[#b10e6b]">
-                          Explore all features ›
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link href="/Workflow" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
-              How it works
-            </Link>
-
-            <Link href="/" className="flex min-w-0 items-center mx-4" onClick={() => setMobileMenuOpen(false)}>
+            {/* Centre logo */}
+            <Link
+              href="/"
+              className="flex min-w-0 items-center mx-4"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <Image
                 src="/site_img/logobg.png"
-                alt="TK Voice &amp; Visuals"
+                alt="TK Voice & Visuals"
                 width={52}
                 height={52}
                 priority
@@ -156,26 +121,35 @@ function RaRuNavbar() {
               />
             </Link>
 
-            <Link href="/Pricing" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
-              Pricing
-            </Link>
-
-            <Link href="/About" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/62 transition-colors hover:text-[#890051]">
-              About
-            </Link>
-
+            {/* Right links (after logo) */}
+            {centreLinks.slice(3).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#25181d]/70 transition-colors hover:text-[#890051]"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
+          {/* ── Desktop CTA buttons ──────────────────────────────── */}
           <div className="hidden items-center gap-3 md:flex">
-            <Link href="/SignIn" className="rounded-full border border-[#b10e6b]/15 bg-white/45 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#890051] transition-colors hover:bg-white/70 hover:text-[#b10e6b]">
+            <Link
+              href="/SignIn"
+              className="rounded-full border border-[#b10e6b]/15 bg-white/45 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#890051] transition-colors hover:bg-white/70 hover:text-[#b10e6b]"
+            >
               SignIn
             </Link>
-
-            <Link href="/Consultancy" className="rounded-full bg-gradient-to-r from-[#890051] to-[#b10e6b] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white transition-transform hover:-translate-y-0.5 hover:opacity-95">
+            <Link
+              href="/Consultancy"
+              className="rounded-full bg-gradient-to-r from-[#890051] to-[#b10e6b] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white transition-transform hover:-translate-y-0.5 hover:opacity-95"
+            >
               Consultancy
             </Link>
           </div>
 
+          {/* ── Mobile: CTA + hamburger ──────────────────────────── */}
           <div className="flex items-center gap-2 md:hidden">
             <Link
               href="/SignIn"
@@ -191,57 +165,37 @@ function RaRuNavbar() {
             >
               Consultancy
             </Link>
+            <button
+              type="button"
+              className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border border-white/40 bg-white/45 text-[#890051] shadow-sm transition-colors hover:bg-white/70"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMobileMenuOpen((current) => !current)}
+            >
+              <span className="text-xl leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
+            </button>
           </div>
-
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border border-white/40 bg-white/45 text-[#890051] shadow-sm transition-colors hover:bg-white/70 md:hidden"
-            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMobileMenuOpen((current) => !current)}
-          >
-            <span className="text-xl leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
-          </button>
         </div>
 
+        {/* ── Mobile menu panel ───────────────────────────────────── */}
         <div
           id="mobile-navigation"
-          className={`overflow-hidden md:hidden transition-all duration-300 ease-out ${mobileMenuOpen ? "mt-4 max-h-[80vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-            }`}
+          className={`overflow-hidden md:hidden transition-all duration-300 ease-out ${
+            mobileMenuOpen
+              ? "mt-4 max-h-[80vh] opacity-100"
+              : "max-h-0 opacity-0 pointer-events-none"
+          }`}
           aria-hidden={!mobileMenuOpen}
         >
           <div className="rounded-[24px] border border-white/45 bg-white/88 p-4 shadow-[0_18px_45px_rgba(5,7,18,0.14)] backdrop-blur-2xl">
             <div className="grid gap-4">
               <div className="rounded-[20px] border border-[#b10e6b]/10 bg-white/70 p-4">
-                <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Navigate</div>
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {[
-                    { label: "How it works", href: "/Workflow" },
-                    { label: "Pricing", href: "/Pricing" },
-                    { label: "About", href: "/About" },
-                  ].map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-[16px] bg-white/80 px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#25181d] transition-colors hover:bg-[#f5dce3]/80"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">
+                  Navigate
                 </div>
-              </div>
-
-              <div className="rounded-[20px] border border-[#b10e6b]/10 bg-white/70 p-4">
-                <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#857278]">Solutions</div>
                 <div className="grid gap-2">
-                  {[
-                    { href: "/Discover/RaRu", label: "SOFTWARE DEVELOPMENT" },
-                    { href: "/Discover/Nexora", label: "Nexora" },
-                    { href: "/Discover/MIC", label: "MIC" },
-                    { href: "/Discover/eyeCatching", label: "eyeCatching" },
-                  ].map((item) => (
+                  {mobileLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -275,8 +229,6 @@ function RaRuNavbar() {
           </div>
         </div>
       </nav>
-
-
     </>
   );
 }

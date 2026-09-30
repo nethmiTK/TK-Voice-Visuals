@@ -100,7 +100,7 @@ export default function TKPage() {
 							Start Your Journey
 						</Link>
 						<Link
-							href="/Discover"
+							href="/systemTK"
 							className="w-full sm:w-auto border-2 border-[#b10e6b] text-[#b10e6b] px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full font-semibold uppercase tracking-widest text-xs sm:text-sm hover:bg-[#fff0f3] transition-colors"
 						>
 							Explore Solutions

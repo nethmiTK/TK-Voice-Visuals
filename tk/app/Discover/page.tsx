@@ -30,13 +30,13 @@ const hubs = [
     title: "BUSINESS IT SOLUTION",
     description: "Premium technical architectures.",
     items: ["PORTFOLIO WEBSITE", "WEB APP", "MOBILE APP", "DESKTOP APPLICATION"],
-    href: "/Discover/RaRu",
+    href: "/systemTK",
   },
   {
     title: "VOICE OVER",
     description: "The sonics of authority.",
     items: ["Commercial Voice Over", "Documentary Narration", "News / Announcement Voice Over", "YouTube Series Voice Over"],
-    href: "/Discover/MIC",
+    href: "/MIC",
   },
   {
     title: "VIDEO EDITING",
@@ -169,7 +169,7 @@ export default function DiscoverPage({ isEmbedded = false }: { isEmbedded?: bool
             <Link href="/Consultancy" className="rounded-full bg-gradient-to-r from-[#890051] to-[#b10e6b] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">
               Work with us
             </Link>
-            <Link href="/Discover/RaRu" className="rounded-full border border-[#890051]/15 bg-white px-6 py-3 text-sm font-semibold text-[#890051] transition-colors hover:bg-[#fff0f3]">
+            <Link href="/systemTK" className="rounded-full border border-[#890051]/15 bg-white px-6 py-3 text-sm font-semibold text-[#890051] transition-colors hover:bg-[#fff0f3]">
               Explore TK
             </Link>
           </div>
